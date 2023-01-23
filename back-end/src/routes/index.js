@@ -1,3 +1,3 @@
 import loginRouter from './loginRouter';
 
-module.exports = { loginRouter } ;
+module.exports = { loginRouter };
