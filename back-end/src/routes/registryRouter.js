@@ -1,6 +1,6 @@
 const express = require('express');
 
-const RegistryController = require('../controller/UserController');
+const RegistryController = require('../controller/RegistryController');
 
 const registryRouter = express.Router();
 
