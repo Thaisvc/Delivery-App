@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import * as C from './styles';
 import validateLogin from '../../utils/validateLogin';
 import AuthContext from '../../context/Auth/AuthContext';
-import { Navigate } from 'react-router-dom';
 
 function Login() {
   const auth = useContext(AuthContext);
