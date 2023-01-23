@@ -1,17 +1,17 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
 import './App.css';
-import rockGlass from './images/rockGlass.svg';
 import AppProvider from './provider/AppProvider';
+import Register from './pages/Register';
 
 function App() {
   return (
     <AppProvider>
-      <div className="App">
-        <span className="logo">TRYBE</span>
-        <object className="rocksGlass" type="image/svg+xml" data={ rockGlass }>
-          Glass
-        </object>
-      </div>
+      <Routes>
+        <Route path="/register" element={ <Register /> } />
+        <Route path="/costumer/products" />
+      </Routes>
     </AppProvider>
   );
 }
