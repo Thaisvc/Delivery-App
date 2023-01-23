@@ -1,17 +1,15 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import AppProvider from './provider/AppProvider';
-import Register from './pages/Register';
+import Main from './router';
+import GlobalStyles from './GlobalStyles';
 
 function App() {
   return (
     <AppProvider>
-      <Routes>
-        <Route path="/register" element={ <Register /> } />
-        <Route path="/costumer/products" />
-      </Routes>
+      <GlobalStyles />
+      <Main />
     </AppProvider>
   );
 }
