@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../../context/Auth/AuthContext';
 
 function Navbar() {
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   return (
     <header className="header">
@@ -24,12 +24,12 @@ function Navbar() {
         data-testid="customer_products__element-navbar-user-full-name"
         to="/customer/profile"
       >
-        User Name
+        { user.name }
       </span>
       <Link
         data-testid="customer_products__element-navbar-link-logout"
         to="/login"
-        onClick={ setUser(null) }
+        onClick={ () => setUser(null) }
       >
         Sair
       </Link>
