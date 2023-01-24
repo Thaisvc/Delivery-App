@@ -1,10 +1,10 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-import { Link, Navigate } from 'react-router-dom';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+
+import AuthContext from '../../context/Auth/AuthContext';
 
 function Navbar() {
-  const auth = useContext();
+  const { setUser } = useContext(AuthContext);
 
   return (
     <header className="header">
@@ -29,21 +29,12 @@ function Navbar() {
       <Link
         data-testid="customer_products__element-navbar-link-logout"
         to="/login"
-        onClick={}
+        onClick={ setUser(null) }
       >
         Sair
       </Link>
-      { (logoff) && <Navigate to="/login" /> }
     </header>
   );
 }
-
-Navbar.propTypes = {
-  setLogin: PropTypes.func,
-};
-
-Navbar.defaultProps = {
-  setLogin: undefined,
-};
 
 export default Navbar;
