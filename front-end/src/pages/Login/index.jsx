@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import * as C from './styles';
 import validateLogin from '../../utils/validateLogin';
 import AuthContext from '../../context/Auth/AuthContext';
@@ -12,6 +12,8 @@ function Login() {
   const [canLogin, setCanLogion] = useState(true);
   const [Logged, setLogged] = useState(false);
   const [userFound, setUserFound] = useState(false);
+
+  const navHistory = useNavigate();
 
   useEffect(() => {
     setCanLogion(validateLogin(login, password));
@@ -67,7 +69,10 @@ function Login() {
           >
             Login
           </C.LoginBtn>
-          <C.RegisterBtn data-testid="common_login__button-register">
+          <C.RegisterBtn
+            data-testid="common_login__button-register"
+            onClick={ () => navHistory('/register') }
+          >
             Ainda não tenho conta
           </C.RegisterBtn>
         </C.LoginForm>
