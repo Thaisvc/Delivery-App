@@ -5,7 +5,7 @@ import AuthContext from './AuthContext';
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [created, setCreated] = useState(null);
+  const [, setCreated] = useState(null);
   const api = useApi();
 
   const login = async (email, password) => {
