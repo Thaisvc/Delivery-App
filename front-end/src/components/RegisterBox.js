@@ -1,9 +1,33 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AuthContext from '../context/Auth/AuthContext';
+import validateRegister from '../utils/validateRegister';
 
 function RegisterBox() {
+  const auth = useContext(AuthContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
+  const [create, setCreate] = useState(false);
+  const [canCreate, setCanCreate] = useState(false);
+  const [fail, setFail] = useState(false);
+  const navHistory = useNavigate();
+
+  useEffect(() => {
+    setCanCreate(validateRegister(email, pwd, name));
+  }, [email, pwd, name]);
+
+  const handleRegister = async () => {
+    try {
+      const isCreated = await auth.register(name, email, pwd, 'customer');
+      if (isCreated) {
+        setCreate(true);
+      }
+    } catch (e) {
+      setFail(true);
+    }
+  };
+
   return (
     <>
       <form>
@@ -43,12 +67,18 @@ function RegisterBox() {
         <button
           type="submit"
           data-testid="common_register__button-register"
+          disabled={ canCreate }
+          onClick={ async (e) => {
+            e.preventDefault();
+            await handleRegister();
+            if (create) navHistory('/customer/products');
+          } }
         >
           CADASTRAR
         </button>
       </form>
       <p
-        hidden
+        hidden={ fail }
         data-testid="common_register__element-invalid_register"
       >
         teste

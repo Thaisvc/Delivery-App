@@ -5,6 +5,7 @@ import AuthContext from './AuthContext';
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [created, setCreated] = useState(null);
   const api = useApi();
 
   const login = async (email, password) => {
@@ -16,7 +17,16 @@ function AuthProvider({ children }) {
     return false;
   };
 
-  const value = useMemo(() => ({ user, login }), [user, login]);
+  const register = async (name, email, password, role) => {
+    const data = await api.register(name, email, password, role);
+    if (data) {
+      setCreated(data);
+      return true;
+    }
+    return false;
+  };
+
+  const value = useMemo(() => ({ user, login, register }), [user, login, register]);
 
   return (
     <AuthContext.Provider value={ value }>
