@@ -1,41 +1,38 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useContext } from 'react';
 
-function Navbar({ setLogin }) {
-  // const navigate = useNavigate();
-
-  const logoff = () => {
-    localStorage.removeItem('token');
-    setLogin(false);
-    navigate('/login');
-  };
+function Navbar() {
+  const auth = useContext();
 
   return (
     <header className="header">
-      <div>
-        <div
-          data-testid="customer_products__element-navbar-link-products"
-        // onClick={() => navigate('/products')}
-        >
-          PRODUTOS
-        </div>
-        <div
-          data-testid="customer_products__element-navbar-link-orders"
-        // type="button"
-        // req12 onClick={() => navigate('/ ')}
-        >
-          MEUS PEDIDOS
-        </div>
-        <div
-          data-testid="customer_products__element-navbar-user-full-name"
-        />
+      <Link
+        data-testid="customer_products__element-navbar-link-products"
+        to="/customer/products"
+      >
+        PRODUTOS
+      </Link>
+      <Link
+        data-testid="customer_products__element-navbar-link-orders"
+        to="/customer/orders"
+      >
+        MEUS PEDIDOS
+      </Link>
+      <Link
+        data-testid="customer_products__element-navbar-user-full-name"
+        to="/customer/profile"
+      >
         User Name
-      </div>
-
-      <div
+      </Link>
+      <Link
         data-testid="customer_products__element-navbar-link-logout"
-      />
+        to="/login"
+        onClick={}
+      >
+        Sair
+      </Link>
       { (logoff) && <Navigate to="/login" /> }
     </header>
   );
