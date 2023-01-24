@@ -19,6 +19,7 @@ function AuthProvider({ children }) {
 
   const register = async (name, email, password, role) => {
     const data = await api.register(name, email, password, role);
+    console.log(data, 'register');
     if (data) {
       setCreated(data);
       return true;

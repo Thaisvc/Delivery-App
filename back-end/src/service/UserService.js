@@ -18,9 +18,8 @@ class UserService {
       where: { email, password: hash },
     });
     if (!response) throw new HttpError(404, 'User not found');
-    /* const token = */ createToken(response);
-    /* console.log(token); */
-    return { type: 200, message: response };
+    const token = createToken(response);
+    return { type: 200, message: { response, token } };
   }
 }
 
