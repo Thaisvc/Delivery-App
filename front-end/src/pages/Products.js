@@ -1,21 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from '../components/Products/Navbar';
 
 function Products() {
-  const [logged, setLogin] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setLogin(true);
-    }
-  }, []);
   return (
     <>
-      <Navbar
-        logged={ logged }
-        setLogin={ setLogin }
-      />
+      <Navbar />
       <section className="products-section" />
     </>
   );
