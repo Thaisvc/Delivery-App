@@ -1,5 +1,5 @@
 import React from 'react';
-import RegisterBox from '../../components/Products/RegisterBox';
+import RegisterBox from '../../components/Register/RegisterBox';
 
 function Register() {
   return (
