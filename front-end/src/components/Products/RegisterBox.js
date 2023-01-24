@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../context/Auth/AuthContext';
-import validateRegister from '../utils/validateRegister';
+import AuthContext from '../../context/Auth/AuthContext';
+import validateRegister from '../../utils/validateRegister';
 
 function RegisterBox() {
   const auth = useContext(AuthContext);

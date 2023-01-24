@@ -26,7 +26,14 @@ function AuthProvider({ children }) {
     return false;
   };
 
-  const value = useMemo(() => ({ user, login, register }), [user, login, register]);
+  const value = useMemo(
+    () => ({
+      user,
+      setUser,
+      login,
+      register }),
+    [user, login, setUser, register],
+  );
 
   return (
     <AuthContext.Provider value={ value }>
