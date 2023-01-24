@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Products/Navbar';
-import RedirectToLogin from '../components/Products/RedirectToLogin';
 
 function Products() {
   const [logged, setLogin] = useState(false);
@@ -14,8 +13,6 @@ function Products() {
   return (
     <>
       <Navbar
-        OnNavigation={ () => setLogin(!logged) }
-        OffNavegation={ RedirectToLogin }
         logged={ logged }
         setLogin={ setLogin }
       />

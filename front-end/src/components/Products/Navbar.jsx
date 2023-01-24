@@ -1,9 +1,9 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-function Navbar({ OnNavigation, OffNavegation, logged, setLogin }) {
-  const navigate = useNavigate();
+function Navbar({ setLogin }) {
+  // const navigate = useNavigate();
 
   const logoff = () => {
     localStorage.removeItem('token');
@@ -30,36 +30,22 @@ function Navbar({ OnNavigation, OffNavegation, logged, setLogin }) {
         <div
           data-testid="customer_products__element-navbar-user-full-name"
         />
-        <div
-          data-testid="customer_products__element-navbar-link-logout"
-        >
-          <OnNavigation />
-          {
-            (logged)
-              ? (
-                <button type="button" onClick={ () => logoff() }>
-                  SAIR
-                </button>
-              )
-              : <OffNavegation />
-
-          }
-        </div>
+        User Name
       </div>
+
+      <div
+        data-testid="customer_products__element-navbar-link-logout"
+      />
+      { (logoff) && <Navigate to="/login" /> }
     </header>
   );
 }
 
 Navbar.propTypes = {
-  OnNavigation: PropTypes.elementType.isRequired,
-  OffNavegation: PropTypes.elementType,
-  logged: PropTypes.bool,
   setLogin: PropTypes.func,
 };
 
 Navbar.defaultProps = {
-  OffNavegation: null,
-  logged: undefined,
   setLogin: undefined,
 };
 
