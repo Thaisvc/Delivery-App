@@ -1,11 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as C from './styles';
 import validateLogin from '../../utils/validateLogin';
 import AuthContext from '../../context/Auth/AuthContext';
+import useApi from '../../hooks/useApi';
+import { saveUser } from '../../utils/localStorage';
 
 function Login() {
   const auth = useContext(AuthContext);
+  const api = useApi();
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -22,6 +25,16 @@ function Login() {
   const handleLogin = async () => {
     try {
       const isLogged = await auth.login(login, password);
+      const data = await api.login(login, password);
+      saveUser(
+        {
+          name: data.response.name,
+          email: data.response.email,
+          role: 'customer',
+          token: data.token,
+        },
+      );
+      navHistory('/customer/products');
       if (isLogged) {
         setLogged(true);
       }
@@ -85,7 +98,7 @@ function Login() {
           </C.ErrorMessage>
         )}
 
-        { Logged && <Navigate to="/customer/products" /> }
+        {/*  { Logged && <Navigate to="/customer/products" /> } */}
       </C.Content>
     </C.Container>
   );

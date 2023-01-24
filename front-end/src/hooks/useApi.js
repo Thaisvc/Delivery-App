@@ -8,11 +8,17 @@ const api = axios.create({
 const useApi = () => ({
   login: async (login, password) => {
     const response = await api.post('/login', { email: login, password });
+    // console.log(response.data);
     return response.data;
   },
 
   register: async (name, login, password, role) => {
-    const response = await api.post('/registry', { email: login, password, name, role });
+    const response = await api.post('/registry', {
+      email: login,
+      password,
+      name,
+      role,
+    });
     return response.data;
   },
 });

@@ -1,10 +1,20 @@
-import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { getUser, logout } from '../../utils/localStorage';
 
 import AuthContext from '../../context/Auth/AuthContext';
 
 function Navbar() {
+  useEffect(() => {
+    const getLocalStorage = getUser();
+    console.log(getLocalStorage);
+  }, []);
+
   const { setUser } = useContext(AuthContext);
+  const handleExit = () => {
+    setUser(null);
+    logout();
+  };
 
   return (
     <header className="header">
@@ -29,7 +39,7 @@ function Navbar() {
       <Link
         data-testid="customer_products__element-navbar-link-logout"
         to="/login"
-        onClick={ setUser(null) }
+        onClick={ handleExit }
       >
         Sair
       </Link>
