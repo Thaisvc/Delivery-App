@@ -20,12 +20,12 @@ function Navbar() {
       >
         MEUS PEDIDOS
       </Link>
-      <Link
+      <span
         data-testid="customer_products__element-navbar-user-full-name"
         to="/customer/profile"
       >
         User Name
-      </Link>
+      </span>
       <Link
         data-testid="customer_products__element-navbar-link-logout"
         to="/login"
