@@ -10,6 +10,11 @@ const useApi = () => ({
     const response = await api.post('/login', { email: login, password });
     return response.data;
   },
+
+  register: async (name, login, password, role) => {
+    const response = await api.post('/registry', { email: login, password, name, role });
+    return response.data;
+  },
 });
 
 export default useApi;
