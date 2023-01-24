@@ -11,9 +11,10 @@ class RegistryController {
   async registry() {
     try {
       const { name, email, password, role } = this.req.body;
-      const { type, message } = await this.registryService.
-      registry(
-        { name, email, password, role });
+      const { type, message } = await this.registryService.registry(
+        { name, email, password, role },
+        );
+
       this.res.status(type).json(message);
     } catch (e) {
       this.next(e);
