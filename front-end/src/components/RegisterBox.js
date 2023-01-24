@@ -8,7 +8,6 @@ function RegisterBox() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
-  const [create, setCreate] = useState(false);
   const [canCreate, setCanCreate] = useState(false);
   const [fail, setFail] = useState(false);
   const navHistory = useNavigate();
@@ -19,9 +18,10 @@ function RegisterBox() {
 
   const handleRegister = async () => {
     try {
+      setFail(false);
       const isCreated = await auth.register(name, email, pwd, 'customer');
       if (isCreated) {
-        setCreate(true);
+        navHistory('/customer/products');
       }
     } catch (e) {
       setFail(true);
@@ -67,18 +67,20 @@ function RegisterBox() {
         <button
           type="submit"
           data-testid="common_register__button-register"
-          disabled={ canCreate }
+          disabled={ !canCreate }
           onClick={ async (e) => {
             e.preventDefault();
             await handleRegister();
-            if (create) navHistory('/customer/products');
+            setName('');
+            setEmail('');
+            setPwd('');
           } }
         >
           CADASTRAR
         </button>
       </form>
       <p
-        hidden={ fail }
+        hidden={ !fail }
         data-testid="common_register__element-invalid_register"
       >
         teste
