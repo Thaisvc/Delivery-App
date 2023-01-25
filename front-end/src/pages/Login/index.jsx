@@ -4,7 +4,7 @@ import * as C from './styles';
 import validateLogin from '../../utils/validateLogin';
 import AuthContext from '../../context/Auth/AuthContext';
 import useApi from '../../hooks/useApi';
-import { saveUser } from '../../utils/localStorage';
+import { saveByKey } from '../../utils/localStorage';
 
 function Login() {
   const auth = useContext(AuthContext);
@@ -26,7 +26,8 @@ function Login() {
     try {
       const isLogged = await auth.login(login, password);
       const data = await api.login(login, password);
-      saveUser(
+      saveByKey(
+        'user',
         {
           name: data.response.name,
           email: data.response.email,

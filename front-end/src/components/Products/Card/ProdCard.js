@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { string, number } from 'prop-types';
+
+import CartContext from '../../../context/Cart/CartContext';
 
 function RenderProdCard({ count, name, price, url }) {
   const [quant, setQuant] = useState(0);
+  const { setCart, cart } = useContext(CartContext);
   useEffect(() => {
     if (quant < 0) setQuant(0);
   }, [quant]);
@@ -26,7 +29,12 @@ function RenderProdCard({ count, name, price, url }) {
       <button
         data-testid={ `customer_products__button-card-add-item-${count}` }
         type="button"
-        onClick={ () => { setQuant(quant + 1); } }
+        onClick={ () => {
+          setQuant(quant + 1);
+          const newArr = cart.splice(count - 1, price * quant);
+          console.log(newArr);
+          setCart(newArr);
+        } }
       >
         +
       </button>
@@ -34,12 +42,22 @@ function RenderProdCard({ count, name, price, url }) {
         data-testid={ `customer_products__input-card-quantity-${count}` }
         type="number"
         value={ quant }
+        onChange={ (e) => {
+          setQuant(e.target.value);
+          const newArr = cart.splice(count - 1, price * quant);
+          console.log(cart);
+          setCart(newArr);
+        } }
         className="input-quantity"
       />
       <button
         data-testid={ `customer_products__button-card-rm-item-${count}` }
         type="button"
-        onClick={ () => { setQuant(quant - 1); } }
+        onClick={ () => {
+          setQuant(quant - 1);
+          const newArr = cart.splice(count - 1, price * quant);
+          setCart(newArr);
+        } }
       >
         -
       </button>

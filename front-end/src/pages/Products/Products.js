@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Navbar from '../../components/Products/Navbar';
-import AppContext from '../../context/AppContext';
 import RenderProdCard from '../../components/Products/Card/ProdCard';
+import CartContext from '../../context/Cart/CartContext';
 
 function Products() {
-  const { getProds, prodList } = useContext(AppContext);
+  const { getProds, prodList, cart } = useContext(CartContext);
+  const nav = useNavigate();
 
   useEffect(() => {
     const populateList = async () => {
@@ -12,6 +15,7 @@ function Products() {
     };
     populateList();
   }, []);
+
   return (
     <>
       <Navbar />
@@ -30,6 +34,12 @@ function Products() {
             url={ urlImage }
           />))
       }
+      <button
+        type="button"
+        onClick={ () => nav('/customer/checkout') }
+      >
+        { `Ver Carrinho: R$${cart.reduce((acc, cur) => acc + cur)}` }
+      </button>
     </>
   );
 }

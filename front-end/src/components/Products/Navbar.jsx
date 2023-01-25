@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import { getUser, logout } from '../../utils/localStorage';
+import { getByKey, logout } from '../../utils/localStorage';
 
 import AuthContext from '../../context/Auth/AuthContext';
 
@@ -8,7 +8,7 @@ function Navbar() {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    const getLocalStorage = getUser();
+    const getLocalStorage = getByKey('user');
     setUserName(getLocalStorage.name);
   }, []);
 
