@@ -1,5 +1,6 @@
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+
 const JWT_SECRET = fs.readFileSync('jwt.evaluation.key');
 
 const createToken = (user) => {
