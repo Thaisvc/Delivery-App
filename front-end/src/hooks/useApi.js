@@ -25,6 +25,11 @@ const useApi = () => ({
     const response = await api.get('/products');
     return response.data;
   },
+
+  getSellers: async () => {
+    const response = await api.get('/sellers');
+    return response.data;
+  },
 });
 
 export default useApi;

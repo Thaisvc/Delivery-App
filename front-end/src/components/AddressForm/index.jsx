@@ -1,7 +1,9 @@
+import { useContext } from 'react';
+import CartContext from '../../context/Cart/CartContext';
 import * as C from './styles';
 
 function AddressForm() {
-  const salesPeople = ['vendedor fulano silva']; // puxar do context o nome das pessoas vendedoras
+  const { sellers } = useContext(CartContext);
 
   return (
     <C.AddressForm>
@@ -15,8 +17,10 @@ function AddressForm() {
             data-testid="customer_checkout__select-seller"
           >
             {
-              salesPeople
-                .map((item, i) => <option key={ i } value={ item }>{ item }</option>)
+              sellers
+                .map((item) => (
+                  <option key={ item.id } value={ item.name }>{ item.name }</option>
+                ))
             }
           </C.Select>
         </C.Label>

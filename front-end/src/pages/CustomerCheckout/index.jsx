@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import * as C from './styles';
 import NavBar from '../../components/Products/Navbar';
 
@@ -8,11 +8,14 @@ import CartContext from '../../context/Cart/CartContext';
 import toMoneyType from '../../utils/toMoneyType';
 
 function CustomerCheckout() {
-  const { cart, total } = useContext(CartContext);
+  const { cart, total, getSellers } = useContext(CartContext);
 
-  const saveSale = () => {
-    
-  }
+  useEffect(() => {
+    const populateSellersList = async () => {
+      await getSellers();
+    };
+    populateSellersList();
+  }, []);
 
   return (
     <C.Container>
@@ -40,7 +43,7 @@ function CustomerCheckout() {
             <C.SubmitOrderBtn
               type="submit"
               data-testid="customer_checkout__button-submit-order"
-              onClick={}
+              // onClick={}
             >
               Finalizar Pedido
             </C.SubmitOrderBtn>

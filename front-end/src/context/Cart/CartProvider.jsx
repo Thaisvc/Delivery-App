@@ -7,6 +7,7 @@ function CartProvider({ children }) {
   const [prodList, setProdList] = useState([]);
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
+  const [sellers, setSellers] = useState([]);
 
   const api = useApi();
 
@@ -28,9 +29,18 @@ function CartProvider({ children }) {
     return false;
   };
 
+  const getSellers = async () => {
+    const data = await api.getSellers();
+    if (data) {
+      setSellers(data);
+      return true;
+    }
+    return false;
+  };
+
   const value = useMemo(
-    () => ({ prodList, getProds, cart, setCart, total, setTotal }),
-    [prodList, getProds, cart, setCart, total, setTotal],
+    () => ({ prodList, getProds, cart, setCart, total, setTotal, sellers, getSellers }),
+    [prodList, getProds, cart, setCart, total, setTotal, sellers, getSellers],
   );
 
   return (
