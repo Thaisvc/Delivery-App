@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import * as C from './styles';
 import validateLogin from '../../utils/validateLogin';
 import AuthContext from '../../context/Auth/AuthContext';
@@ -34,7 +34,7 @@ function Login() {
           token: data.token,
         },
       );
-      navHistory('/customer/products');
+
       if (isLogged) {
         setLogged(true);
       }
@@ -98,7 +98,7 @@ function Login() {
           </C.ErrorMessage>
         )}
 
-        {/*  { Logged && <Navigate to="/customer/products" /> } */}
+        { Logged && <Navigate to="/customer/products" /> }
       </C.Content>
     </C.Container>
   );
