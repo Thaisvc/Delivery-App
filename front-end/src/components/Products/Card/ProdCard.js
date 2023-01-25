@@ -10,9 +10,12 @@ function RenderProdCard({ count, name, price, url }) {
   const upItemCart = () => {
     const itemCart = { name, price, quant };
 
-    cart.filter((item) => item.name === itemCart.name);
+    const newCart = cart.filter((item) => item.name !== itemCart.name);
 
-    setCart([...cart, itemCart]);
+    if (quant >= 0) setCart([...newCart, itemCart]);
+    if (quant === 0) {
+      setCart([...newCart]);
+    }
   };
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import CartContext from '../../context/Cart/CartContext';
 import RenderProdCard from '../../components/Products/Card/ProdCard';
 
 function Products() {
-  const { getProds, prodList, total, cart } = useContext(CartContext);
+  const { getProds, prodList, total } = useContext(CartContext);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -14,11 +14,7 @@ function Products() {
       await getProds();
     };
     populateList();
-  }, [getProds]);
-
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
+  }, []);
 
   return (
     <>
@@ -40,9 +36,10 @@ function Products() {
       }
       <button
         type="button"
+        data-testid="customer_products__checkout-bottom-value"
         onClick={ () => nav('/customer/checkout') }
       >
-        { `Ver Carrinho: R$${total}` }
+        { `Ver Carrinho: R$${total.toFixed(2).replace('.', ',')}` }
       </button>
     </>
   );
