@@ -5,13 +5,10 @@ const registryRouter = require('../routes/registryRouter');
 const ErrorHandler = require('../middlewares/ErrorHandler');
 const productRouter = require('../routes/productRouter');
 
-const path = (
-'/home/vinicius/Turma_22_B/Projetos/Back-end/sd-022-b-project-delivery-app/back-end/src/images');
-
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use('/images', express.static(path));
+app.use('/images', express.static(__dirname.replace('/api', '/images')));
 app.use('/login', loginRouter);
 app.use('/registry', registryRouter);
 app.use('/products', productRouter);

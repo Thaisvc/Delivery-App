@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Navbar from '../../components/Products/Navbar';
-import AppContext from '../../context/AppContext';
+import CartContext from '../../context/Cart/CartContext';
 import RenderProdCard from '../../components/Products/Card/ProdCard';
 
 function Products() {
-  const { getProds, prodList } = useContext(AppContext);
+  const { getProds, prodList, total } = useContext(CartContext);
+  const nav = useNavigate();
 
   useEffect(() => {
     const populateList = async () => {
@@ -12,6 +15,7 @@ function Products() {
     };
     populateList();
   }, []);
+
   return (
     <>
       <Navbar />
@@ -30,6 +34,13 @@ function Products() {
             url={ urlImage }
           />))
       }
+      <button
+        type="button"
+        data-testid="customer_products__checkout-bottom-value"
+        onClick={ () => nav('/customer/checkout') }
+      >
+        { `Ver Carrinho: R$${total.toFixed(2).replace('.', ',')}` }
+      </button>
     </>
   );
 }
