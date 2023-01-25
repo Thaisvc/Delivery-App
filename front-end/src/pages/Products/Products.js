@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../../components/Products/Navbar';
-import RenderProdCard from '../../components/Products/Card/ProdCard';
 import CartContext from '../../context/Cart/CartContext';
+import RenderProdCard from '../../components/Products/Card/ProdCard';
 
 function Products() {
-  const { getProds, prodList, cart } = useContext(CartContext);
+  const { getProds, prodList, total, cart } = useContext(CartContext);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function Products() {
       await getProds();
     };
     populateList();
-  }, []);
+  }, [getProds]);
 
   useEffect(() => {
     console.log(cart);
@@ -42,10 +42,7 @@ function Products() {
         type="button"
         onClick={ () => nav('/customer/checkout') }
       >
-        {
-          `Ver Carrinho: R$${(cart
-            .reduce((acc, cur) => acc + cur)).toFixed(2).replace('.', ',')}`
-        }
+        { `Ver Carrinho: R$${total}` }
       </button>
     </>
   );
