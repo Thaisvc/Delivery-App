@@ -12,7 +12,17 @@ const useApi = () => ({
   },
 
   register: async (name, login, password, role) => {
-    const response = await api.post('/registry', { email: login, password, name, role });
+    const response = await api.post('/registry', {
+      email: login,
+      password,
+      name,
+      role,
+    });
+    return response.data;
+  },
+
+  getProds: async () => {
+    const response = await api.get('/products');
     return response.data;
   },
 });

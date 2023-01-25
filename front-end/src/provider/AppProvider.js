@@ -1,21 +1,22 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { node } from 'prop-types';
 import AppContext from '../context/AppContext';
 
-function AppProvider({ children }) {
-  const value = useMemo(() => {
-
-  }, []);
+function AuthProvider({ children }) {
+  const value = useMemo(
+    () => ({ }),
+    [],
+  );
 
   return (
     <AppContext.Provider value={ value }>
-      {children}
+      { children }
     </AppContext.Provider>
   );
 }
 
-AppProvider.propTypes = {
+AuthProvider.propTypes = {
   children: node.isRequired,
 };
 
-export default AppProvider;
+export default AuthProvider;

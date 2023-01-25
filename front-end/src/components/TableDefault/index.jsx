@@ -1,10 +1,19 @@
 import { string, arrayOf, shape } from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import * as C from './styles';
+import toMoneyType from '../../utils/toMoneyType';
+import CartContext from '../../context/Cart/CartContext';
 
 function TableDefault({ type, listItems }) {
+  const { cart, setCart } = useContext(CartContext);
   const [dataTestType, setDataTestType] = useState('');
   // types: 'users', 'checkout', 'order'
+
+  const removeItem = (name) => {
+    const newcart = cart.filter((item) => item.name !== name);
+    setCart(newcart);
+    console.log(cart);
+  };
 
   useEffect(() => {
     if (type === 'users') setDataTestType('admin_manage__element-user');
@@ -29,7 +38,7 @@ function TableDefault({ type, listItems }) {
         { listItems.map((item, i) => (
           <C.Line key={ i }>
             <td data-testid={ `${dataTestType}-table-item-number-${i}` }>
-              { item.id }
+              { i + 1 }
             </td>
             <td
               data-testid={
@@ -37,17 +46,18 @@ function TableDefault({ type, listItems }) {
                   ? 'admin_manage__input-email' : `${dataTestType}-table-name-${i}`
               }
             >
-              { type === 'users' ? item.name : item.description }
+              { item.name }
             </td>
             <td data-testid={ `${dataTestType}-table-quantity-${i}` }>
-              { type === 'users' ? item.email : item.quantity }
+              { type === 'users' ? item.email : item.quant }
             </td>
             <td data-testid={ `${dataTestType}-table-unit-price-${i}` }>
-              { type === 'users' ? item.type : item.unitPrice }
+              { type === 'users' ? item.type : `R$${toMoneyType(item.price)}` }
             </td>
             <td data-testid={ `${dataTestType}-table-sub-total-${i}` }>
               {
-                type !== 'users' ? item.subTotal : <button type="button">Excluir</button>
+                type !== 'users' ? `R$${toMoneyType(item.subTotal)}`
+                  : <button type="button">Excluir</button>
               }
             </td>
             <td>
@@ -55,7 +65,7 @@ function TableDefault({ type, listItems }) {
                 <button
                   data-testid={ `${dataTestType}-table-remove-${i}` }
                   type="button"
-                  onClick={ () => 'remover' }
+                  onClick={ () => removeItem(item.name) }
                 >
                   Remover item
                 </button>) }

@@ -1,10 +1,22 @@
-import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { getByKey, logout } from '../../utils/localStorage';
 
 import AuthContext from '../../context/Auth/AuthContext';
 
 function Navbar() {
-  const { user, setUser } = useContext(AuthContext);
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const getLocalStorage = getByKey('user');
+    if (getLocalStorage) setUserName(getLocalStorage.name);
+  }, []);
+
+  const { setUser } = useContext(AuthContext);
+  const handleExit = () => {
+    setUser(null);
+    logout();
+  };
 
   return (
     <header className="header">
@@ -24,12 +36,12 @@ function Navbar() {
         data-testid="customer_products__element-navbar-user-full-name"
         to="/customer/profile"
       >
-        {/* { user.name } */}
+        { userName }
       </span>
       <Link
         data-testid="customer_products__element-navbar-link-logout"
         to="/login"
-        onClick={ () => setUser(null) }
+        onClick={ handleExit }
       >
         Sair
       </Link>

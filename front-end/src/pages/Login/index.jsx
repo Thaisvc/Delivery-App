@@ -3,9 +3,12 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import * as C from './styles';
 import validateLogin from '../../utils/validateLogin';
 import AuthContext from '../../context/Auth/AuthContext';
+import useApi from '../../hooks/useApi';
+import { saveByKey } from '../../utils/localStorage';
 
 function Login() {
   const auth = useContext(AuthContext);
+  const api = useApi();
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -22,6 +25,17 @@ function Login() {
   const handleLogin = async () => {
     try {
       const isLogged = await auth.login(login, password);
+      const data = await api.login(login, password);
+      saveByKey(
+        'user',
+        {
+          name: data.response.name,
+          email: data.response.email,
+          role: 'customer',
+          token: data.token,
+        },
+      );
+
       if (isLogged) {
         setLogged(true);
       }

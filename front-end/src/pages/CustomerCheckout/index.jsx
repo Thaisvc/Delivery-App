@@ -1,21 +1,18 @@
+import { useContext } from 'react';
 import * as C from './styles';
 import NavBar from '../../components/Products/Navbar';
 
 import AddressForm from '../../components/AddressForm';
 import TableDefault from '../../components/TableDefault';
-
-const testItems = [
-  {
-    id: 1,
-    description: 'Test item',
-    quantity: 1,
-    unitPrice: 3.12,
-    subTotal: 71.52,
-  },
-];
+import CartContext from '../../context/Cart/CartContext';
+import toMoneyType from '../../utils/toMoneyType';
 
 function CustomerCheckout() {
-  // puxar do context ou do localStorage a lista de produtos no carrinho e puxar o valor total
+  const { cart, total } = useContext(CartContext);
+
+  const saveSale = () => {
+    
+  }
 
   return (
     <C.Container>
@@ -25,11 +22,13 @@ function CustomerCheckout() {
         <C.Block>
           <C.Title>Finalizar Pedido</C.Title>
           <C.Order>
-            <TableDefault type="checkout" listItems={ testItems } />
+            <TableDefault type="checkout" listItems={ cart } />
           </C.Order>
 
           <C.TotalPrice>
-            <C.Value>{ `R$ ${0}` }</C.Value>
+            <C.Value data-testid="customer_checkout__element-order-total-price">
+              { `R$ ${toMoneyType(total)}` }
+            </C.Value>
           </C.TotalPrice>
         </C.Block>
 
@@ -41,6 +40,7 @@ function CustomerCheckout() {
             <C.SubmitOrderBtn
               type="submit"
               data-testid="customer_checkout__button-submit-order"
+              onClick={}
             >
               Finalizar Pedido
             </C.SubmitOrderBtn>
