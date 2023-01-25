@@ -24,7 +24,7 @@ function Navbar() {
         data-testid="customer_products__element-navbar-user-full-name"
         to="/customer/profile"
       >
-        { user.name }
+        {/* { user.name } */}
       </span>
       <Link
         data-testid="customer_products__element-navbar-link-logout"
