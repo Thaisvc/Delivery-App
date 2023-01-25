@@ -1,23 +1,25 @@
-import React from 'react';
+// import React, { useContext } from 'react';
 
-import RenderProdCard from './Card/ProdCard';
+// import RenderProdCard from './Card/ProdCard';
+// import AppContext from '../../context/AppContext';
 
-function ProductCards() {
-  function GenerateCards() {
-    const listQuant = 12;
-    const prodCardList = [];
-    let counter = 1;
-    while (counter < listQuant) {
-      prodCardList.push(RenderProdCard(counter));
-      counter += 1;
-    }
-    return prodCardList;
-  }
-  return (
-    <div className="productCard-page">
-      { GenerateCards() }
-    </div>
-  );
-}
+// function ProductCards() {
+//   const { prodList } = useContext(AppContext);
 
-export default ProductCards;
+//   function GenerateCards() {
+//     const prodCardList = prodList
+//       .map(({
+//         name,
+//         price,
+//         urlImage,
+//       }, index) => RenderProdCard(index, name, price, urlImage));
+//     return prodCardList;
+//   }
+//   return (
+//     <div className="productCard-page">
+//       { prodList && GenerateCards() }
+//     </div>
+//   );
+// }
+
+// export default ProductCards;
