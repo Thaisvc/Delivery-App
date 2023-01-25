@@ -31,9 +31,9 @@ function RenderProdCard({ count, name, price, url }) {
         type="button"
         onClick={ () => {
           setQuant(quant + 1);
-          const newArr = cart.splice(count - 1, price * quant);
-          console.log(newArr);
-          setCart(newArr);
+          const copyArr = [...cart];
+          copyArr[count - 1] = quant * price;
+          setCart(copyArr);
         } }
       >
         +
@@ -44,9 +44,9 @@ function RenderProdCard({ count, name, price, url }) {
         value={ quant }
         onChange={ (e) => {
           setQuant(e.target.value);
-          const newArr = cart.splice(count - 1, price * quant);
-          console.log(cart);
-          setCart(newArr);
+          const copyArr = [...cart];
+          copyArr[count - 1] = quant * price;
+          setCart(copyArr);
         } }
         className="input-quantity"
       />
@@ -55,8 +55,9 @@ function RenderProdCard({ count, name, price, url }) {
         type="button"
         onClick={ () => {
           setQuant(quant - 1);
-          const newArr = cart.splice(count - 1, price * quant);
-          setCart(newArr);
+          const copyArr = [...cart];
+          copyArr[count - 1] = quant * price;
+          setCart(copyArr);
         } }
       >
         -

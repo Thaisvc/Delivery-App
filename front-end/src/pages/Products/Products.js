@@ -16,6 +16,10 @@ function Products() {
     populateList();
   }, []);
 
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
+
   return (
     <>
       <Navbar />
@@ -38,7 +42,10 @@ function Products() {
         type="button"
         onClick={ () => nav('/customer/checkout') }
       >
-        { `Ver Carrinho: R$${cart.reduce((acc, cur) => acc + cur)}` }
+        {
+          `Ver Carrinho: R$${(cart
+            .reduce((acc, cur) => acc + cur)).toFixed(2).replace('.', ',')}`
+        }
       </button>
     </>
   );
