@@ -12,7 +12,6 @@ class UserController {
     try {
       const { email, password } = this.req.body;
       const { type, message } = await this.userService.login({ email, password });
-      console.log(message);
       this.res.status(type).json(message);
     } catch (e) {
       this.next(e);
