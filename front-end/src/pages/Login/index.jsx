@@ -39,7 +39,6 @@ function Login() {
 
       if (data.response.role === 'administrator') {
         setLoggedAdm(true);
-        setLogged(false);
       }
       if (isLogged) {
         setLogged(true);
