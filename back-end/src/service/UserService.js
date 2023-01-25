@@ -11,7 +11,7 @@ class UserService {
 
   async login({ email, password }) {
     const { error } = loginSchema.validate({ email, password });
-    if (error) return { type: 400, message: error.message };
+    if (error) throw new HttpError(400, error.message);
     const hash = crypto.createHash('md5').update(password).digest('hex');
     const response = await this.userModel.findOne({
       where: { email, password: hash },
