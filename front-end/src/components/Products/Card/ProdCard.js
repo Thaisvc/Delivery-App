@@ -6,8 +6,18 @@ import CartContext from '../../../context/Cart/CartContext';
 function RenderProdCard({ count, name, price, url }) {
   const [quant, setQuant] = useState(0);
   const { setCart, cart } = useContext(CartContext);
+
+  const upItemCart = () => {
+    const itemCart = { name, price, quant };
+
+    cart.filter((item) => item.name === itemCart.name);
+
+    setCart([...cart, itemCart]);
+  };
+
   useEffect(() => {
     if (quant < 0) setQuant(0);
+    upItemCart();
   }, [quant]);
 
   return (
@@ -31,9 +41,6 @@ function RenderProdCard({ count, name, price, url }) {
         type="button"
         onClick={ () => {
           setQuant(quant + 1);
-          const newArr = cart.splice(count - 1, price * quant);
-          console.log(newArr);
-          setCart(newArr);
         } }
       >
         +
@@ -42,12 +49,7 @@ function RenderProdCard({ count, name, price, url }) {
         data-testid={ `customer_products__input-card-quantity-${count}` }
         type="number"
         value={ quant }
-        onChange={ (e) => {
-          setQuant(e.target.value);
-          const newArr = cart.splice(count - 1, price * quant);
-          console.log(cart);
-          setCart(newArr);
-        } }
+        onChange={ (e) => setQuant(e.target.value) }
         className="input-quantity"
       />
       <button

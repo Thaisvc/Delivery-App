@@ -6,7 +6,7 @@ import RenderProdCard from '../../components/Products/Card/ProdCard';
 import CartContext from '../../context/Cart/CartContext';
 
 function Products() {
-  const { getProds, prodList, cart } = useContext(CartContext);
+  const { getProds, prodList, total } = useContext(CartContext);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function Products() {
       await getProds();
     };
     populateList();
-  }, []);
+  }, [getProds]);
 
   return (
     <>
@@ -38,7 +38,7 @@ function Products() {
         type="button"
         onClick={ () => nav('/customer/checkout') }
       >
-        { `Ver Carrinho: R$${cart.reduce((acc, cur) => acc + cur)}` }
+        { `Ver Carrinho: R$${total}` }
       </button>
     </>
   );
