@@ -8,7 +8,7 @@ function RegisterAdm() {
   const [emailAdm, setEmailAdm] = useState('');
   const [pwdAdm, setPwdAdm] = useState('');
   const [type, setType] = useState('');
-  console.log(nameAdm, emailAdm, pwdAdm, type);
+  // console.log(nameAdm, emailAdm, pwdAdm, type);
   return (
     <form>
       <label htmlFor="Nome">
@@ -50,7 +50,7 @@ function RegisterAdm() {
       <label htmlFor="Tipo">
         Tipo
         <select
-          id="admin_manage__select-role"
+          data-testid="admin_manage__select-role"
           onChange={ ({ target }) => setType(target.value) }
           value={ type }
         >
@@ -62,9 +62,9 @@ function RegisterAdm() {
       <button
         type="submit"
         data-testid="admin_manage__button-register"
-        onClick={ async (e) => {
+        onClick={ (e) => {
           e.preventDefault();
-          // await handleRegister();
+
           setNameAdm('');
           setEmailAdm('');
           setPwdAdm('');
