@@ -28,9 +28,6 @@ function Login() {
       const isLogged = await auth.login(login, password);
       const data = await api.login(login, password);
 
-      console.log(data);
-      saveUser(
-
       saveByKey(
         'user',
 
