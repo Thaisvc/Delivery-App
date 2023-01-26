@@ -31,15 +31,16 @@ function Login() {
       console.log(data);
       saveUser(
 
-      saveByKey(
-        'user',
+        saveByKey(
+          'user',
 
-        {
-          name: data.response.name,
-          email: data.response.email,
-          role: data.response.role,
-          token: data.token,
-        },
+          {
+            name: data.response.name,
+            email: data.response.email,
+            role: data.response.role,
+            token: data.token,
+          },
+        ),
       );
 
       if (data.response.role === 'administrator') {
