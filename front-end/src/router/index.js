@@ -5,6 +5,7 @@ import Register from '../pages/Register/Register';
 import Products from '../pages/Products/Products';
 import CartProvider from '../context/Cart/CartProvider';
 import AdminManage from '../pages/Admin/index';
+import Sales from '../pages/Sales/Sales';
 
 export default function Main() {
   return (
@@ -24,10 +25,10 @@ export default function Main() {
           }
         />
         <Route
-          path="order"
+          path="sales"
           element={
             <CartProvider>
-              <Products />
+              <Sales />
             </CartProvider>
           }
         />
