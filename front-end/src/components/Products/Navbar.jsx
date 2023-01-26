@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import { getUser, logout } from '../../utils/localStorage';
+import { getByKey, logout } from '../../utils/localStorage';
 
 import AuthContext from '../../context/Auth/AuthContext';
 
@@ -8,8 +8,8 @@ function Navbar() {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    const getLocalStorage = getUser();
-    setUserName(getLocalStorage.name);
+    const getLocalStorage = getByKey('user');
+    if (getLocalStorage) setUserName(getLocalStorage.name);
   }, []);
 
   const { setUser } = useContext(AuthContext);
@@ -36,7 +36,7 @@ function Navbar() {
         data-testid="customer_products__element-navbar-user-full-name"
         to="/customer/profile"
       >
-        {userName}
+        { userName }
       </span>
       <Link
         data-testid="customer_products__element-navbar-link-logout"
