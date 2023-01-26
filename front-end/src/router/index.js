@@ -8,7 +8,6 @@ import AdminManage from '../pages/Admin/Registration';
 
 import CartProvider from '../context/Cart/CartProvider';
 
-
 export default function Main() {
   return (
     <Routes>
