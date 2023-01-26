@@ -1,35 +1,38 @@
 import React from 'react';
-import { number } from 'prop-types';
+import { number, string } from 'prop-types';
 
-function RenderSaleCard({ count }) {
+function RenderSaleCard({ id, totalPrice, saleDate, status }) {
   return (
     <>
       <p
-        data-testid={ `customer_orders__element-order-id-${count}` }
+        data-testid={ `customer_orders__element-order-id-${id}` }
       >
-        {`Pedido ${count}`}
+        {`Pedido ${id}`}
       </p>
       <p
-        data-testid={ `customer_orders__element-delivery-status-${count}` }
+        data-testid={ `customer_orders__element-delivery-status-${id}` }
       >
-        Status
+        { status }
       </p>
       <p
-        data-testid={ `customer_orders__element-order-date-${count}` }
+        data-testid={ `customer_orders__element-order-date-${id}` }
       >
-        Data da Venda
+        { saleDate }
       </p>
       <p
-        data-testid={ `customer_orders__element-card-price-${count}` }
+        data-testid={ `customer_orders__element-card-price-${id}` }
       >
-        Total da Venda
+        { `R$ ${totalPrice}` }
       </p>
     </>
   );
 }
 
 RenderSaleCard.propTypes = {
-  count: number.isRequired,
-};
+  id: number,
+  totalPrice: number,
+  saleDate: string,
+  status: string,
+}.isRequired;
 
 export default RenderSaleCard;
