@@ -14,6 +14,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [canLogin, setCanLogion] = useState(true);
   const [Logged, setLogged] = useState(false);
+  const [LoggedAdm, setLoggedAdm] = useState(false);
   const [userFound, setUserFound] = useState(false);
 
   const navHistory = useNavigate();
@@ -26,19 +27,28 @@ function Login() {
     try {
       const isLogged = await auth.login(login, password);
       const data = await api.login(login, password);
+
+      console.log(data);
+      saveUser(
+
       saveByKey(
         'user',
+
         {
           name: data.response.name,
           email: data.response.email,
-          role: 'customer',
+          role: data.response.role,
           token: data.token,
         },
       );
 
+      if (data.response.role === 'administrator') {
+        setLoggedAdm(true);
+      }
       if (isLogged) {
         setLogged(true);
       }
+      console.log(data.response.role);
     } catch (e) {
       setUserFound(true);
     }
@@ -100,6 +110,7 @@ function Login() {
         )}
 
         { Logged && <Navigate to="/customer/products" /> }
+        { LoggedAdm && <Navigate to="/admin/manage" /> }
       </C.Content>
     </C.Container>
   );
