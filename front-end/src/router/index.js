@@ -5,6 +5,7 @@ import Register from '../pages/Register/Register';
 import Products from '../pages/Products/Products';
 import CustomerCheckout from '../pages/CustomerCheckout';
 import CartProvider from '../context/Cart/CartProvider';
+import AdminManage from '../pages/Admin/index';
 
 export default function Main() {
   return (
@@ -32,6 +33,7 @@ export default function Main() {
           }
         />
       </Route>
+      <Route path="/admin/manage" element={ <AdminManage /> } />
     </Routes>
   );
 }
