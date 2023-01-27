@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../../components/Products/Navbar';
@@ -8,7 +8,8 @@ import toMoneyType from '../../utils/toMoneyType';
 
 function Products() {
   const { getProds, prodList, total } = useContext(CartContext);
-  const nav = useNavigate();
+  const navHistory = useNavigate();
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     const populateList = async () => {
@@ -16,6 +17,11 @@ function Products() {
     };
     populateList();
   }, []);
+
+  useEffect(() => {
+    if (total > 0) return setDisabled(false);
+    return setDisabled(true);
+  }, [total]);
 
   return (
     <>
@@ -36,13 +42,17 @@ function Products() {
           />))
       }
       <button
-        type="button"
         data-testid="customer_products__button-cart"
-        onClick={ () => nav('/customer/checkout') }
+        type="button"
+        disabled={ disabled }
+        onClick={ () => navHistory('/customer/checkout') }
       >
-        <p data-testid="customer_products__checkout-bottom-value">
-          { `Ver Carrinho: R$${toMoneyType(total)}` }
-        </p>
+        Ver carinho: R$
+        <span
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          { `Ver Carrinho: R$${total.toFixed(2).replace('.', ',')}` }
+        </span>
       </button>
     </>
   );
