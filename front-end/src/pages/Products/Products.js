@@ -1,13 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../../components/Products/Navbar';
 import CartContext from '../../context/Cart/CartContext';
 import RenderProdCard from '../../components/Products/Card/ProdCard';
+import toMoneyType from '../../utils/toMoneyType';
 
 function Products() {
   const { getProds, prodList, total } = useContext(CartContext);
-  const nav = useNavigate();
+  const navHistory = useNavigate();
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     const populateList = async () => {
@@ -15,6 +17,11 @@ function Products() {
     };
     populateList();
   }, []);
+
+  useEffect(() => {
+    if (total > 0) return setDisabled(false);
+    return setDisabled(true);
+  }, [total]);
 
   return (
     <>
@@ -35,11 +42,17 @@ function Products() {
           />))
       }
       <button
+        data-testid="customer_products__button-cart"
         type="button"
-        data-testid="customer_products__checkout-bottom-value"
-        onClick={ () => nav('/customer/checkout') }
+        disabled={ disabled }
+        onClick={ () => navHistory('/customer/checkout') }
       >
-        { `Ver Carrinho: R$${total.toFixed(2).replace('.', ',')}` }
+        Ver carinho: R$
+        <span
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          { `Ver Carrinho: R$${toMoneyType(total)}` }
+        </span>
       </button>
     </>
   );

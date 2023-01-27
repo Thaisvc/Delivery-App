@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 
+const { Op } = require('sequelize');
 const registrySchema = require('../validations/RegistrySchema');
 const { User } = require('../database/models');
 const HttpError = require('../utils/HttpError');
@@ -15,7 +16,7 @@ class RegistryService {
     const hash = crypto.createHash('md5').update(password).digest('hex');
 
     const [user, created] = await this.userModel.findOrCreate({
-      where: { name, email },
+      where: { [Op.or]: [{ name }, { email }] },
       defaults: { name, email, password: hash, role },
     });
     

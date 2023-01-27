@@ -12,4 +12,6 @@ const createToken = (user) => {
   );
 };
 
-module.exports = { createToken/* , validateToken */ };
+const validateToken = (token) => jwt.verify(token, JWT_SECRET);
+
+module.exports = { createToken, validateToken };
