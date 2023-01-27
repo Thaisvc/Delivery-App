@@ -21,6 +21,22 @@ class UserService {
     const token = createToken(response);
     return { type: 200, message: { response, token } };
   }
+
+  async getSellers() {
+    const response = await this.userModel.findAll({
+      where: { role: 'seller' },
+    });
+
+    const withoutPassword = response.map(({ id, name, email, role }) => ({
+      id,
+      name,
+      email,
+      role,
+    }));
+
+    if (!response) throw new HttpError(404, 'Sellers not found');
+    return { type: 200, message: withoutPassword };
+  }
 }
 
 module.exports = UserService;

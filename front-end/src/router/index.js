@@ -4,6 +4,8 @@ import Login from '../pages/Login';
 import Register from '../pages/Register/Register';
 import Products from '../pages/Products/Products';
 import CartProvider from '../context/Cart/CartProvider';
+import CustomerCheckout from '../pages/CustomerCheckout';
+import Orders from '../pages/Orders';
 import AdminManage from '../pages/Admin/index';
 
 export default function Main() {
@@ -24,10 +26,18 @@ export default function Main() {
           }
         />
         <Route
-          path="order"
+          path="checkout"
           element={
             <CartProvider>
-              <Products />
+              <CustomerCheckout />
+            </CartProvider>
+          }
+        />
+        <Route
+          path="orders/:id"
+          element={
+            <CartProvider>
+              <Orders />
             </CartProvider>
           }
         />
