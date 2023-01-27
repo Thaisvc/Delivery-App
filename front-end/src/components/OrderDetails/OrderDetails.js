@@ -1,6 +1,7 @@
 import React from 'react';
 
 function OrderDetails() {
+  const dataTesid = 'customer_order_details__element-order-details-label-delivery-status';
   return (
     <>
       <h1 data-testid="top-title">
@@ -23,12 +24,11 @@ function OrderDetails() {
         >
           12/112/2020
         </th>
-        <td
-          // eslint-disable-next-line max-len
-          data-testid="customer_order_details__element-order-details-label-delivery-status"
+        <p
+          data-testid={ dataTesid }
         >
           Entregue
-        </td>
+        </p>
 
         <button
           data-testid="customer_order_details__button-delivery-check"
