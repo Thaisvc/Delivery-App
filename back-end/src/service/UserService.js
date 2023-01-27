@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const loginSchema = require('../validations/loginSchema');
 const { User } = require('../database/models');
 const HttpError = require('../utils/HttpError');
-const { createToken } = require('../utils/tokenCreate');
+const { createToken } = require('../utils/token');
 
 class UserService {
   constructor() {
