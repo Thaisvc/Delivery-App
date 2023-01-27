@@ -16,7 +16,7 @@ function OrderDetails() {
         <th
           data-testid="customer_order_details__element-order-details-label-seller-name"
         >
-          P.Vend:fulana
+          P.Vend: fulana
         </th>
         <th
           data-testid="customer_order_details__element-order-details-label-order-date"
