@@ -8,7 +8,7 @@ function RegisterAdm() {
   const [nameAdm, setNameAdm] = useState('');
   const [emailAdm, setEmailAdm] = useState('');
   const [pwdAdm, setPwdAdm] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('administrador');
   const [error, setError] = useState(false);
   const [canCreate, setCanCreate] = useState(false);
 
@@ -20,7 +20,7 @@ function RegisterAdm() {
     try {
       setError(false);
       const isCreated = await
-      auth.registerAdm(nameAdm, emailAdm, pwdAdm, 'administrador');
+      auth.registerAdm(nameAdm, emailAdm, pwdAdm, type);
       console.log(isCreated);
       if (isCreated) {
         console.log(isCreated);
@@ -77,7 +77,9 @@ function RegisterAdm() {
             value={ type }
           >
             <option>administrador</option>
-            <option> </option>
+            <option>seller</option>
+            <option>customer</option>
+
           </select>
         </label>
 

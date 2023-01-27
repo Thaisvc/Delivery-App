@@ -36,6 +36,7 @@ const useApi = () => ({
       { headers: { Authorization: getByKey('user').token } },
 
     );
+    console.log(response.data);
     return response.data;
   },
 
