@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getByKey } from '../utils/localStorage';
 
 const api = axios.create({
   baseURL: 'http://localhost:3001/',
@@ -23,6 +24,20 @@ const useApi = () => ({
 
   getProds: async () => {
     const response = await api.get('/products');
+    return response.data;
+  },
+
+  getSellers: async () => {
+    const response = await api.get('/sellers');
+    return response.data;
+  },
+
+  createSale: async ({
+    userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status, cartItems,
+  }) => {
+    const response = await api.post('/sales', {
+      userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status, cartItems,
+    }, { headers: { authorization: getByKey('user').token } });
     return response.data;
   },
 });

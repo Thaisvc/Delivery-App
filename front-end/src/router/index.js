@@ -4,8 +4,9 @@ import Login from '../pages/Login';
 import Register from '../pages/Register/Register';
 import Products from '../pages/Products/Products';
 import CartProvider from '../context/Cart/CartProvider';
+import CustomerCheckout from '../pages/CustomerCheckout';
+import Orders from '../pages/Orders';
 import AdminManage from '../pages/Admin/index';
-import Sales from '../pages/Sales/Sales';
 
 export default function Main() {
   return (
@@ -25,10 +26,18 @@ export default function Main() {
           }
         />
         <Route
-          path="orders"
+          path="checkout"
           element={
             <CartProvider>
-              <Sales />
+              <CustomerCheckout />
+            </CartProvider>
+          }
+        />
+        <Route
+          path="orders/:id"
+          element={
+            <CartProvider>
+              <Orders />
             </CartProvider>
           }
         />

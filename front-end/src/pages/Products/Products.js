@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Products/Navbar';
 import CartContext from '../../context/Cart/CartContext';
 import RenderProdCard from '../../components/Products/Card/ProdCard';
+import toMoneyType from '../../utils/toMoneyType';
 
 function Products() {
   const { getProds, prodList, total } = useContext(CartContext);
@@ -50,9 +51,8 @@ function Products() {
         <span
           data-testid="customer_products__checkout-bottom-value"
         >
-          { `Total: R$${total.toFixed(2).replace('.', ',')}` }
+          { `Total: R$${toMoneyType(total)}` }
         </span>
-
       </button>
     </>
   );

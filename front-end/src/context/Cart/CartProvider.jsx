@@ -7,6 +7,11 @@ function CartProvider({ children }) {
   const [prodList, setProdList] = useState([]);
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
+  const [sellers, setSellers] = useState([]);
+  const [saleId, setSaleId] = useState();
+  const [seller, setSeller] = useState();
+  const [address, setAddress] = useState();
+  const [houseNumber, setHouseNumber] = useState();
 
   const api = useApi();
 
@@ -14,6 +19,7 @@ function CartProvider({ children }) {
     let value = 0;
     cart.forEach((item) => {
       value += item.price * item.quant;
+      item.subTotal = Number((Number(item.price) * item.quant).toFixed(2));
     });
     setTotal(value);
   }, [cart]);
@@ -27,9 +33,63 @@ function CartProvider({ children }) {
     return false;
   };
 
+  const getSellers = async () => {
+    const data = await api.getSellers();
+    if (data) {
+      setSellers(data);
+      setSeller(data[0].id);
+      return true;
+    }
+    return false;
+  };
+
+  const createSale = async ({
+    userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status, cartItems,
+  }) => {
+    const data = await api.createSale({
+      userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status, cartItems,
+    });
+    console.log(data);
+    return setSaleId(data.id);
+  };
+
   const value = useMemo(
-    () => ({ prodList, getProds, cart, setCart, total, setTotal }),
-    [prodList, getProds, cart, setCart, total, setTotal],
+    () => ({
+      prodList,
+      getProds,
+      cart,
+      setCart,
+      total,
+      setTotal,
+      sellers,
+      getSellers,
+      saleId,
+      createSale,
+      seller,
+      setSeller,
+      address,
+      setAddress,
+      houseNumber,
+      setHouseNumber,
+    }),
+    [
+      prodList,
+      getProds,
+      cart,
+      setCart,
+      total,
+      setTotal,
+      sellers,
+      getSellers,
+      saleId,
+      createSale,
+      seller,
+      setSeller,
+      address,
+      setAddress,
+      houseNumber,
+      setHouseNumber,
+    ],
   );
 
   return (
