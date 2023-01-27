@@ -8,7 +8,7 @@ function RenderProdCard({ count, name, price, url }) {
   const { setCart, cart } = useContext(CartContext);
 
   const upItemCart = () => {
-    const itemCart = { name, price, quant };
+    const itemCart = { id: count, name, price, quant };
 
     const newCart = cart.filter((item) => item.name !== itemCart.name);
 

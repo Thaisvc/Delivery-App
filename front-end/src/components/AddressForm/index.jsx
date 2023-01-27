@@ -1,9 +1,21 @@
-import { useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CartContext from '../../context/Cart/CartContext';
 import * as C from './styles';
 
 function AddressForm() {
-  const { sellers } = useContext(CartContext);
+  const {
+    sellers, seller, setSeller, setAddress, setHouseNumber,
+  } = useContext(CartContext);
+  const [userAddress, setUserAddress] = useState('');
+  const [number, setNumber] = useState('');
+
+  useEffect(() => {
+    setAddress(userAddress);
+  }, [userAddress]);
+
+  useEffect(() => {
+    setHouseNumber(number);
+  }, [number]);
 
   return (
     <C.AddressForm>
@@ -15,11 +27,15 @@ function AddressForm() {
 
           <C.Select
             data-testid="customer_checkout__select-seller"
+            value={ seller }
+            onChange={ (e) => {
+              setSeller(e.target.value);
+            } }
           >
             {
-              sellers
+              sellers.length > 0 && sellers
                 .map((item) => (
-                  <option key={ item.id } value={ item.name }>{ item.name }</option>
+                  <option key={ item.id } value={ item.id }>{ item.name }</option>
                 ))
             }
           </C.Select>
@@ -32,6 +48,8 @@ function AddressForm() {
 
           <C.Input
             type="address"
+            value={ userAddress }
+            onChange={ (e) => setUserAddress(e.target.value) }
             data-testid="customer_checkout__input-address"
           />
         </C.Label>
@@ -43,6 +61,8 @@ function AddressForm() {
 
           <C.Input
             type="number"
+            value={ number }
+            onChange={ (e) => setNumber(e.target.value) }
             data-testid="customer_checkout__input-address-number"
           />
         </C.Label>
