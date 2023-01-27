@@ -1,11 +1,11 @@
 import React from 'react';
 import RenderSaleCard from '../../components/Sales/Card/SaleCard';
-import Navbar from '../../components/Products/Navbar';
+import NavBar from '../../components/Navbar/NavBar';
 
 function Sales() {
   return (
     <>
-      <Navbar />
+      <NavBar />
       <RenderSaleCard
         id={ 1 }
         totalPrice={ 109 }
