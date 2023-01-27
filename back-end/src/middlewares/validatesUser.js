@@ -1,17 +1,14 @@
-
-const {validateToken} = require('../utils/tokenCreate') 
+const { validateToken } = require('../utils/token'); 
 
 const validatesUser = (req, _res, next) => {
   const { authorization } = req.headers;
 
   try {
     validateToken(authorization);
-    next()
+    next();
   } catch (e) {
    console.log(e);
   }
-
- 
 };
 
-module.exports = validatesUser
+module.exports = validatesUser;

@@ -5,7 +5,7 @@ const registryRouter = require('../routes/registryRouter');
 const registryAdmRouter = require('../routes/registryAdmRouter');
 const ErrorHandler = require('../middlewares/ErrorHandler');
 const productRouter = require('../routes/productRouter');
-const  validatesUser  = require('../middlewares/validatesUser');
+const validatesUser = require('../middlewares/validatesUser');
 const sellerRouter = require('../routes/sellerRouter');
 const SalesRouter = require('../routes/salesRouter');
 
@@ -15,7 +15,7 @@ app.use(cors());
 app.use('/images', express.static(__dirname.replace('/api', '/images')));
 app.use('/login', loginRouter);
 app.use('/registry', registryRouter);
-app.use('/register',validatesUser, registryAdmRouter);
+app.use('/register', validatesUser, registryAdmRouter);
 app.use('/products', productRouter);
 app.use('/sellers', sellerRouter);
 app.use('/sales', SalesRouter);
