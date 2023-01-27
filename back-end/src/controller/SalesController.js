@@ -1,5 +1,5 @@
 const SaleService = require('../service/SalesService');
-const { validateToken } = require('../utils/token');
+const { validateToken } = require('../utils/tokenCreate');
 
 class SalesController {
   constructor(req, res, next) {

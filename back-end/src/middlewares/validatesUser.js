@@ -1,4 +1,4 @@
-const { validateToken } = require('../utils/token'); 
+const { validateToken } = require('../utils/tokenCreate'); 
 
 const validatesUser = (req, _res, next) => {
   const { authorization } = req.headers;
