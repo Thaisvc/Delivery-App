@@ -46,7 +46,7 @@ function Products() {
         disabled={ disabled }
         onClick={ () => navHistory('/customer/checkout') }
       >
-        Ver carinho: R$
+        Ver carinho
         <span
           data-testid="customer_products__checkout-bottom-value"
         >

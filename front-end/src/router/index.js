@@ -25,7 +25,7 @@ export default function Main() {
           }
         />
         <Route
-          path="checkout"
+          path="orders"
           element={
             <CartProvider>
               <Sales />
