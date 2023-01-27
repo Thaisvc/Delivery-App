@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import Navbar from '../../components/Products/Navbar';
+import NavBar from '../../components/Navbar/NavBar';
 import RenderSaleCard from '../../components/Sales/Card/SaleCard';
 import * as C from './styles';
 import CartContext from '../../context/Cart/CartContext';
@@ -15,7 +15,7 @@ function Orders() {
   }, []);
   return (
     <C.Container>
-      <Navbar />
+      <NavBar />
       { saleList.map((sale, index) => (
         <RenderSaleCard
           key={ index }

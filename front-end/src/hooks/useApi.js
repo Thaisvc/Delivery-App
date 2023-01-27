@@ -12,6 +12,20 @@ const useApi = () => ({
     return response.data;
   },
 
+  validateSavedToken: async () => {
+    try {
+      const localUser = getByKey('user');
+      if (localUser) {
+        await api
+          .patch('/login', {}, { headers: { authorization: localUser.token } });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   register: async (name, login, password, role) => {
     const response = await api.post('/registry', {
       email: login,
