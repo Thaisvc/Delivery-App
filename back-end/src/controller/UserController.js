@@ -17,6 +17,15 @@ class UserController {
       this.next(e);
     }
   }
+
+  async getSellers() {
+    try {
+      const { type, message } = await this.userService.getSellers();
+      this.res.status(type).json(message);
+    } catch (e) {
+      this.next(e);
+    }
+  }
 }
 
 module.exports = UserController;

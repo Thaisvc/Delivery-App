@@ -22,8 +22,6 @@ const createToken = (user) => {
   }
 };
 
-const validateToken = (token) => {
-    return jwt.verify(token, JWT_SECRET); 
-}
+const validateToken = (token) => jwt.verify(token, JWT_SECRET);
 
-module.exports = { createToken, validateToken  };
+module.exports = { createToken, validateToken };
