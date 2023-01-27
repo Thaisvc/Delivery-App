@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Navbar from '../../components/Products/Navbar';
+import NavBar from '../../components/Navbar/NavBar';
 import CartContext from '../../context/Cart/CartContext';
 import RenderProdCard from '../../components/Products/Card/ProdCard';
 import toMoneyType from '../../utils/toMoneyType';
@@ -25,7 +25,7 @@ function Products() {
 
   return (
     <>
-      <Navbar />
+      <NavBar />
       {
         prodList
           .map(({
@@ -47,11 +47,11 @@ function Products() {
         disabled={ disabled }
         onClick={ () => navHistory('/customer/checkout') }
       >
-        Ver carinho: R$
+        Ver carinho
         <span
           data-testid="customer_products__checkout-bottom-value"
         >
-          { `Ver Carrinho: R$${toMoneyType(total)}` }
+          { `Total: R$${toMoneyType(total)}` }
         </span>
       </button>
     </>
