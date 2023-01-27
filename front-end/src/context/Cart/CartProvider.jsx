@@ -12,6 +12,7 @@ function CartProvider({ children }) {
   const [seller, setSeller] = useState();
   const [address, setAddress] = useState();
   const [houseNumber, setHouseNumber] = useState();
+  const [saleList, setSaleList] = useState([]);
 
   const api = useApi();
 
@@ -49,8 +50,16 @@ function CartProvider({ children }) {
     const data = await api.createSale({
       userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status, cartItems,
     });
-    console.log(data);
     return setSaleId(data.id);
+  };
+
+  const getSales = async () => {
+    const data = await api.getSales();
+    if (data.length) {
+      setSaleList(data);
+      return true;
+    }
+    return false;
   };
 
   const value = useMemo(
@@ -71,6 +80,9 @@ function CartProvider({ children }) {
       setAddress,
       houseNumber,
       setHouseNumber,
+      getSales,
+      saleList,
+      setSaleList,
     }),
     [
       prodList,
@@ -89,6 +101,9 @@ function CartProvider({ children }) {
       setAddress,
       houseNumber,
       setHouseNumber,
+      getSales,
+      saleList,
+      setSaleList,
     ],
   );
 

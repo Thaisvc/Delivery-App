@@ -8,10 +8,13 @@ const createToken = (user) => {
   return jwt.sign(
     payload, 
    JWT_SECRET,
-    { algorithm: 'HS256', expiresIn: '1d' },
+    { algorithm: 'HS256', expiresIn: '15d' },
   );
 };
 
-const validateToken = (token) => jwt.verify(token, JWT_SECRET);
+const validateToken = (token) => {
+  jwt.verify(token, JWT_SECRET) 
+  return jwt.decode(token);
+};
 
 module.exports = { createToken, validateToken };

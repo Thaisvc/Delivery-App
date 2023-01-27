@@ -49,7 +49,7 @@ module.exports = {
       saleDate: {
         type: Sequelize.DATE,
         field: 'sale_date',
-        allowNull: false
+        allowNull: true
       },
       status: { type: Sequelize.STRING, allowNull: false },
     });

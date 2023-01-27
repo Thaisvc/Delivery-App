@@ -27,12 +27,12 @@ class SaleService {
       status,
     });
     if (!response) throw new HttpError(400, 'Não foi possível completar a ação');
-    console.log(cartItems);
+    // console.log(cartItems);
 
     const salesProducts = cartItems.map(async (item) => this
     .createSaleProduct(response.id, item.id, item.quant));
-
-    await Promise.all(salesProducts);
+    const promTreated = await Promise.all(salesProducts);
+    console.log(promTreated);
 
     return { type: 201, message: response };
   }

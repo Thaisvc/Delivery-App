@@ -27,6 +27,11 @@ const useApi = () => ({
     return response.data;
   },
 
+  getSales: async () => {
+    const response = await api.get('/sales');
+    return response.data;
+  },
+
   getSellers: async () => {
     const response = await api.get('/sellers');
     return response.data;
