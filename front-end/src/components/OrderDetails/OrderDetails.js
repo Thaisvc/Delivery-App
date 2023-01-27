@@ -8,40 +8,35 @@ function OrderDetails() {
       </h1>
 
       <thead>
-        <tr>
-          <th
-            data-testid="customer_order_details__
-              element-order-details-label-order-id"
-          >
-            Pedido
-          </th>
-          <td
-            data-testid="customer_order_details__
-              element-order-details-label-seller-name"
-          >
-            P.Vend:fulana
-          </td>
-          <td
-            data-testid="customer_order_details__
-              element-order-details-label-order-date"
-          >
-            12/12/2020
-          </td>
-          <td
-            data-testid="customer_order_details__
-            element-order-details-label-delivery-status"
-          >
-            Entregue
-          </td>
+        <th
+          data-testid="customer_order_details__element-order-details-label-order-id"
+        >
+          Pedido
+        </th>
+        <th
+          data-testid="customer_order_details__element-order-details-label-seller-name"
+        >
+          P.Vend:fulana
+        </th>
+        <th
+          data-testid="customer_order_details__element-order-details-label-order-date"
+        >
+          12/112/2020
+        </th>
+        <td
+          // eslint-disable-next-line max-len
+          data-testid="customer_order_details__element-order-details-label-delivery-status"
+        >
+          Entregue
+        </td>
 
-          <button
-            data-testid="customer_order_details__button-delivery-check"
-            type="button"
-            disabled={ false }
-          >
-            Marcar como entregue
-          </button>
-        </tr>
+        <button
+          data-testid="customer_order_details__button-delivery-check"
+          type="button"
+          disabled={ false }
+        >
+          Marcar como entregue
+        </button>
       </thead>
 
       <tbody>
