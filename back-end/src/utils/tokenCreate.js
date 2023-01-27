@@ -13,7 +13,7 @@ const createToken = (user) => {
 };
 
 const validateToken = (token) => {
-  jwt.verify(token, JWT_SECRET) 
+  jwt.verify(token, JWT_SECRET);
   return jwt.decode(token);
 };
 
