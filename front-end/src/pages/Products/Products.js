@@ -51,7 +51,7 @@ function Products() {
         <span
           data-testid="customer_products__checkout-bottom-value"
         >
-          { `Ver Carrinho: R$${total.toFixed(2).replace('.', ',')}` }
+          { `Ver Carrinho: R$${toMoneyType(total)}` }
         </span>
       </button>
     </>
