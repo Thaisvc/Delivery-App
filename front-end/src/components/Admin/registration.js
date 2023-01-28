@@ -8,7 +8,7 @@ function RegisterAdm() {
   const [nameAdm, setNameAdm] = useState('');
   const [emailAdm, setEmailAdm] = useState('');
   const [pwdAdm, setPwdAdm] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('administrador');
   const [error, setError] = useState(false);
   const [canCreate, setCanCreate] = useState(false);
 
@@ -19,7 +19,9 @@ function RegisterAdm() {
   const handleRegisterAdm = async () => {
     try {
       setError(false);
-      const isCreated = await auth.register(nameAdm, emailAdm, pwdAdm, '');
+      const isCreated = await
+      auth.registerAdm(nameAdm, emailAdm, pwdAdm, type);
+      console.log(isCreated);
       if (isCreated) {
         console.log(isCreated);
       }
@@ -74,8 +76,10 @@ function RegisterAdm() {
             onChange={ ({ target }) => setType(target.value) }
             value={ type }
           >
-            <option>Vendedor</option>
-            <option> </option>
+            <option>administrador</option>
+            <option>seller</option>
+            <option>customer</option>
+
           </select>
         </label>
 
@@ -89,6 +93,7 @@ function RegisterAdm() {
             setNameAdm('');
             setEmailAdm('');
             setPwdAdm('');
+            setType('');
           } }
         >
           CADASTRAR

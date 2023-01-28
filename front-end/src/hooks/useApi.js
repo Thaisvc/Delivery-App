@@ -36,6 +36,24 @@ const useApi = () => ({
     return response.data;
   },
 
+  registerAdm: async (name, login, password, role) => {
+    const Token = getByKey('user');
+    if (!Token) { return 'token is required'; }
+    const response = await api.post(
+      '/register',
+      {
+        email: login,
+        password,
+        name,
+        role,
+      },
+      { headers: { Authorization: getByKey('user').token } },
+
+    );
+    console.log(response.data);
+    return response.data;
+  },
+
   getProds: async () => {
     const response = await api.get('/products');
     return response.data;
