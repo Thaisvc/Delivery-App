@@ -42,6 +42,11 @@ export default function Main() {
           }
         />
       </Route>
+      <Route path="/seller">
+        <Route
+          path="orders"
+        />
+      </Route>
       <Route path="/admin/manage" element={ <AdminManage /> } />
     </Routes>
   );
