@@ -1,6 +1,6 @@
 import React from 'react';
 
-function OrderDetails() {
+function OrderDetailsComp() {
   const dataTesid = 'customer_order_details__element-order-details-label-delivery-status';
   return (
     <>
@@ -86,4 +86,4 @@ function OrderDetails() {
   );
 }
 
-export default OrderDetails;
+export default OrderDetailsComp;

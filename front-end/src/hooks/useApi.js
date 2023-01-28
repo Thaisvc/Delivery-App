@@ -16,9 +16,9 @@ const useApi = () => ({
     try {
       const localUser = getByKey('user');
       if (localUser) {
-        await api
+        const response = await api
           .patch('/login', {}, { headers: { authorization: localUser.token } });
-        return true;
+        return { response: response.data };
       }
       return false;
     } catch (error) {

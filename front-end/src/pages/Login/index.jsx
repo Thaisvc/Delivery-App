@@ -25,11 +25,14 @@ function Login() {
   }, [login, password]);
 
   useEffect(() => {
-    const asyncF = async () => {
-      const algo = await api.validateSavedToken();
-      if (algo) navHistory('/customer/products');
+    const checkIfLogged = async () => {
+      const response = await api.validateSavedToken();
+      if (response) {
+        auth.setUser(response);
+        navHistory('/customer/products');
+      }
     };
-    asyncF();
+    checkIfLogged();
   }, []);
 
   const handleLogin = async () => {
@@ -54,7 +57,6 @@ function Login() {
       if (isLogged) {
         setLogged(true);
       }
-      console.log(data.response.role);
     } catch (e) {
       setUserFound(true);
     }
