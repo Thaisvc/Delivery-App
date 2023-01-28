@@ -26,13 +26,25 @@ function AuthProvider({ children }) {
     return false;
   };
 
+  const registerAdm = async (name, email, password, role) => {
+    const data = await api.registerAdm(name, email, password, role);
+    if (data) {
+      console.log(data);
+      setCreated(data);
+      return true;
+    }
+    return false;
+  };
+
   const value = useMemo(
     () => ({
       user,
       setUser,
       login,
-      register }),
-    [user, login, setUser, register],
+      register,
+      registerAdm,
+    }),
+    [user, login, setUser, register, registerAdm],
   );
 
   return (

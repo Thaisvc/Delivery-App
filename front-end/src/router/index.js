@@ -7,6 +7,7 @@ import CartProvider from '../context/Cart/CartProvider';
 import CustomerCheckout from '../pages/CustomerCheckout';
 import Orders from '../pages/Orders';
 import AdminManage from '../pages/Admin/index';
+import OrderDetails from '../pages/OderDetails';
 
 export default function Main() {
   return (
@@ -34,10 +35,18 @@ export default function Main() {
           }
         />
         <Route
-          path="orders/:id"
+          path="orders"
           element={
             <CartProvider>
               <Orders />
+            </CartProvider>
+          }
+        />
+        <Route
+          path="orders/:id"
+          element={
+            <CartProvider>
+              <OrderDetails />
             </CartProvider>
           }
         />
