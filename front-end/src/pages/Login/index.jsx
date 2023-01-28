@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import * as C from './styles';
+
 import validateLogin from '../../utils/validateLogin';
 import AuthContext from '../../context/Auth/AuthContext';
 import useApi from '../../hooks/useApi';
@@ -22,6 +23,17 @@ function Login() {
   useEffect(() => {
     setCanLogion(validateLogin(login, password));
   }, [login, password]);
+
+  useEffect(() => {
+    const checkIfLogged = async () => {
+      const response = await api.validateSavedToken();
+      if (response) {
+        auth.setUser(response);
+        navHistory('/customer/products');
+      }
+    };
+    checkIfLogged();
+  }, []);
 
   const handleLogin = async () => {
     try {
@@ -45,7 +57,6 @@ function Login() {
       if (isLogged) {
         setLogged(true);
       }
-      console.log(data.response.role);
     } catch (e) {
       setUserFound(true);
     }

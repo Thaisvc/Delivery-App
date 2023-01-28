@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import * as C from './styles';
-import NavBar from '../../components/Products/Navbar';
+import NavBar from '../../components/Navbar/NavBar';
 
 import AddressForm from '../../components/AddressForm';
 import TableDefault from '../../components/TableDefault';
