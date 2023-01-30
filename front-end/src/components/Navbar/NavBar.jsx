@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { getByKey, logout } from '../../utils/localStorage';
-
+import * as C from './styles';
 import AuthContext from '../../context/Auth/AuthContext';
 
 function Navbar() {
+  const [userRole, setUserRole] = useState();
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
     const getLocalStorage = getByKey('user');
-    if (getLocalStorage) setUserName(getLocalStorage.name);
+    if (getLocalStorage) {
+      setUserName(getLocalStorage.name);
+      setUserRole(getLocalStorage.role);
+    }
   }, []);
 
   const { setUser } = useContext(AuthContext);
@@ -19,33 +23,55 @@ function Navbar() {
   };
 
   return (
-    <header className="header">
-      <Link
-        data-testid="customer_products__element-navbar-link-products"
-        to="/customer/products"
-      >
-        PRODUTOS
-      </Link>
-      <Link
-        data-testid="customer_products__element-navbar-link-orders"
-        to="/customer/orders"
-      >
-        MEUS PEDIDOS
-      </Link>
-      <span
-        data-testid="customer_products__element-navbar-user-full-name"
-        to="/customer/profile"
-      >
-        { userName }
-      </span>
-      <Link
-        data-testid="customer_products__element-navbar-link-logout"
-        to="/login"
-        onClick={ handleExit }
-      >
-        Sair
-      </Link>
-    </header>
+    <C.Header className="header">
+      <C.Nav>
+        { userRole === 'customer' && (
+          <>
+            <div>
+              <Link
+                data-testid="customer_products__element-navbar-link-products"
+                to="/customer/products"
+              >
+                PRODUTOS
+              </Link>
+            </div>
+            <div>
+              <Link
+                data-testid="customer_products__element-navbar-link-orders"
+                to="/customer/orders"
+              >
+                MEUS PEDIDOS
+              </Link>
+            </div>
+          </>
+        ) }
+        { userRole === 'seller' && (
+          <div>
+            <Link
+              data-testid="customer_products__element-navbar-link-products"
+              to="/seller/orders"
+            >
+              PEDIDOS
+            </Link>
+          </div>
+        ) }
+        <div
+          data-testid="customer_products__element-navbar-user-full-name"
+          to="/customer/profile"
+        >
+          { userName }
+        </div>
+        <div>
+          <Link
+            data-testid="customer_products__element-navbar-link-logout"
+            to="/login"
+            onClick={ handleExit }
+          >
+            Sair
+          </Link>
+        </div>
+      </C.Nav>
+    </C.Header>
   );
 }
 

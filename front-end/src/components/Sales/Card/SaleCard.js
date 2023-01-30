@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { number, string } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-function RenderSaleCard({ id, totalPrice, saleDate, status }) {
+function RenderSaleCard({
+  id,
+  totalPrice,
+  saleDate,
+  status,
+  deliveryAddress,
+  deliveryNumber }) {
   const month = saleDate.split('-');
   const dateObj = new Date(saleDate);
   const navigate = useNavigate();
+  const [dataTestType, setDataTestType] = useState('');
+
+  useEffect(() => {
+    const userRole = getByKey('user').role;
+    if (userRole === 'seller') setDataTestType('seller_orders__element');
+    else setDataTestType('customer_orders__element');
+  }, [deliveryAddress]);
 
   const onClick = () => {
     navigate(`/customer/orders/${id}`);
@@ -26,24 +39,29 @@ function RenderSaleCard({ id, totalPrice, saleDate, status }) {
       onClick={ () => navigate(`/customer/orders/${id}`) }
     >
       <p
-        data-testid={ `customer_orders__element-order-id-${id}` }
+        data-testid={ `${dataTestType}-order-id-${id}` }
       >
         {`Pedido ${id}`}
       </p>
       <p
-        data-testid={ `customer_orders__element-delivery-status-${id}` }
+        data-testid={ `${dataTestType}-delivery-status-${id}` }
       >
         { status }
       </p>
       <p
-        data-testid={ `customer_orders__element-order-date-${id}` }
+        data-testid={ `${dataTestType}-order-date-${id}` }
       >
         { `${dateObj.getDate()}/${month[1]}/${dateObj.getFullYear()}` }
       </p>
       <p
-        data-testid={ `customer_orders__element-card-price-${id}` }
+        data-testid={ `${dataTestType}-card-price-${id}` }
       >
         { `${totalPrice.replace('.', ',')}` }
+      </p>
+      <p
+        data-testid={ `${dataTestType}-card-price-${id}` }
+      >
+        { `${deliveryAddress}, ${deliveryNumber}` }
       </p>
     </div>
   );
