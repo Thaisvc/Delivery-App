@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
+import useApi from '../../hooks/useApi';
 import Navbar from '../../components/Navbar/NavBar';
 import TableDefault from '../../components/TableDefault';
+import toMoneyType from '../../utils/toMoneyType';
 
 export default function SellerDetails() {
-  const teste = [
-    { name: 'teste', quant: 2, price: 10.50, subTotal: 21 },
-    { name: 'teste', quant: 2, price: 10.50, subTotal: 21 },
-    { name: 'teste', quant: 2, price: 10.50, subTotal: 21 },
-  ];
+  const [prodsList, setProdsList] = useState(null);
+  const api = useApi();
+  const dateArray = prodsList && prodsList.saleDate.split('-');
   const { pathname } = useLocation();
   const bronkenPath = pathname.split('/');
+  const orderId = bronkenPath[bronkenPath.length - 1];
+
+  useEffect(() => {
+    (async () => {
+      const response = await api.getSaleProds(orderId);
+      setProdsList(response);
+    })();
+  }, []);
+
+  const renderTotal = () => (
+    <p
+      data-testid="seller_order_details__element-order-total-price "
+    >
+      { `TOTAL: R$ ${toMoneyType(prodsList.totalPrice)}` }
+    </p>
+  );
+
   return (
     <>
       <Navbar />
@@ -19,12 +37,16 @@ export default function SellerDetails() {
         <span
           data-testid="seller_order_details__element-order-details-label-order-id"
         >
-          { `PEDIDO ${bronkenPath[bronkenPath.length - 1]}` }
+          { `PEDIDO ${orderId}` }
         </span>
         <span
           data-testid="seller_order_details__element-order-details-label-order-date"
         >
-          Data: 12/12/1212
+          {
+            dateArray && `Data: ${
+              dateArray[2].split('T')[0]
+            }/${dateArray[1]}/${dateArray[0]}`
+          }
         </span>
         <span
           data-testid="seller_order_details__element-order-details-label-delivery-status"
@@ -43,7 +65,17 @@ export default function SellerDetails() {
         >
           SAIU PARA ENTREGA
         </button>
-        <TableDefault type="orders" listItems={ teste } />
+        { prodsList
+        && <TableDefault
+          type="orders"
+          listItems={ prodsList.sales.map((sale) => ({
+            name: sale.name,
+            quant: sale.SaleProduct.quantity,
+            price: sale.price,
+            subTotal: sale.SaleProduct.quantity * sale.price,
+          })) }
+        /> }
+        { prodsList && renderTotal() }
       </main>
     </>
   );
