@@ -1,18 +1,15 @@
 import { string, arrayOf, shape } from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as C from './styles';
 import toMoneyType from '../../utils/toMoneyType';
-import CartContext from '../../context/Cart/CartContext';
 
 function TableDefault({ type, listItems }) {
-  const { cart, setCart } = useContext(CartContext);
   const [dataTestType, setDataTestType] = useState('');
   // types: 'users', 'checkout', 'order'
 
   const removeItem = (name) => {
     const newcart = cart.filter((item) => item.name !== name);
     setCart(newcart);
-    console.log(cart);
   };
 
   useEffect(() => {
