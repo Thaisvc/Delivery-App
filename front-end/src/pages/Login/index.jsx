@@ -5,7 +5,7 @@ import * as C from './styles';
 import validateLogin from '../../utils/validateLogin';
 import AuthContext from '../../context/Auth/AuthContext';
 import useApi from '../../hooks/useApi';
-import { saveByKey } from '../../utils/localStorage';
+import { getByKey, saveByKey } from '../../utils/localStorage';
 
 function Login() {
   const auth = useContext(AuthContext);
@@ -16,6 +16,7 @@ function Login() {
   const [canLogin, setCanLogion] = useState(true);
   const [Logged, setLogged] = useState(false);
   const [LoggedAdm, setLoggedAdm] = useState(false);
+  const [LoggedSeller, setLoggedSeller] = useState(false);
   const [userFound, setUserFound] = useState(false);
 
   const navHistory = useNavigate();
@@ -29,7 +30,10 @@ function Login() {
       const response = await api.validateSavedToken();
       if (response) {
         auth.setUser(response);
-        navHistory('/customer/products');
+        const userRole = getByKey('user').role;
+        console.log(userRole);
+        if (userRole === 'customer') navHistory('/customer/products');
+        if (userRole === 'seller') navHistory('/seller/orders');
       }
     };
     checkIfLogged();
@@ -53,6 +57,9 @@ function Login() {
 
       if (data.response.role === 'administrator') {
         setLoggedAdm(true);
+      }
+      if (data.response.role === 'seller') {
+        setLoggedSeller(true);
       }
       if (isLogged) {
         setLogged(true);
@@ -118,6 +125,7 @@ function Login() {
         )}
 
         { Logged && <Navigate to="/customer/products" /> }
+        { LoggedSeller && <Navigate to="/seller/orders" /> }
         { LoggedAdm && <Navigate to="/admin/manage" /> }
       </C.Content>
     </C.Container>

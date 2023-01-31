@@ -23,7 +23,7 @@ const GlobalStyles = createGlobalStyle`
     input::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
-}
+    }
   }
 `;
 

@@ -1,7 +1,9 @@
 import { useMemo, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { node } from 'prop-types';
 import CartContext from './CartContext';
 import useApi from '../../hooks/useApi';
+import { getByKey } from '../../utils/localStorage';
 
 function CartProvider({ children }) {
   const [prodList, setProdList] = useState([]);
@@ -15,6 +17,12 @@ function CartProvider({ children }) {
   const [saleList, setSaleList] = useState([]);
 
   const api = useApi();
+
+  const nav = useNavigate();
+
+  useEffect(() => {
+    if (getByKey('user').role !== 'customer') nav('/');
+  }, [nav]);
 
   useEffect(() => {
     let value = 0;
