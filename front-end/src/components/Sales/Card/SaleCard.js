@@ -15,9 +15,10 @@ function RenderSaleCard({
   const navigate = useNavigate();
   const [dataTestType, setDataTestType] = useState('');
   const [urlToGo, setUrlToGo] = useState('');
+  const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
-    const userRole = getByKey('user').role;
+    setUserRole(getByKey('user').role);
     if (userRole === 'seller') {
       setDataTestType('seller_orders__element');
       setUrlToGo(`/seller/orders/${id}`);
@@ -65,11 +66,12 @@ function RenderSaleCard({
       >
         { `${totalPrice.replace('.', ',')}` }
       </p>
-      <p
-        data-testid={ `${dataTestType}-card-price-${id}` }
-      >
-        { `${deliveryAddress}, ${deliveryNumber}` }
-      </p>
+      { userRole === 'seller' && (
+        <p
+          data-testid={ `${dataTestType}-card-address-${id}` }
+        >
+          { `${deliveryAddress}, ${deliveryNumber}` }
+        </p>) }
     </div>
   );
 }
