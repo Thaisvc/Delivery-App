@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { number, string } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { getByKey } from '../../../utils/localStorage';
 
 function RenderSaleCard({
   id,
@@ -36,7 +37,7 @@ function RenderSaleCard({
       role="button"
       tabIndex="0"
       onKeyDown={ onKeyDown }
-      onClick={ () => navigate(`/customer/orders/${id}`) }
+      onClick={ () => navigate(`/seller/orders/${id}`) }
     >
       <p
         data-testid={ `${dataTestType}-order-id-${id}` }

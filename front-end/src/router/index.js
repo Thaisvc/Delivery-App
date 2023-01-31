@@ -61,6 +61,9 @@ export default function Main() {
             </SellerProvider>
           }
         />
+        <Route
+          path="orders/:id"
+        />
       </Route>
       <Route path="/admin/manage" element={ <AdminManage /> } />
     </Routes>
