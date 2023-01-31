@@ -8,6 +8,7 @@ import CustomerCheckout from '../pages/CustomerCheckout';
 import Orders from '../pages/Orders';
 import AdminManage from '../pages/Admin/index';
 import OrderDetails from '../pages/OderDetails';
+import SellerDetails from '../pages/OderDetails/sellerDetails';
 
 export default function Main() {
   return (
@@ -51,6 +52,7 @@ export default function Main() {
           }
         />
       </Route>
+      <Route path="/seller/orders/:id" element={ <SellerDetails /> } />
       <Route path="/admin/manage" element={ <AdminManage /> } />
     </Routes>
   );
