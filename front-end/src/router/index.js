@@ -9,6 +9,7 @@ import Orders from '../pages/Orders';
 import AdminManage from '../pages/Admin/index';
 import OrderDetails from '../pages/OderDetails';
 import SellerOrders from '../pages/SellerOrders';
+import SellerDetails from '../pages/OderDetails/sellerDetails';
 
 export default function Main() {
   return (
@@ -63,6 +64,7 @@ export default function Main() {
         />
         <Route
           path="orders/:id"
+          element={ <SellerDetails /> }
         />
       </Route>
       <Route path="/admin/manage" element={ <AdminManage /> } />

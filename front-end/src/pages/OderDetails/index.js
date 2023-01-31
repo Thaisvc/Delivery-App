@@ -1,14 +1,11 @@
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Navbar from '../../components/Navbar/NavBar';
 
 import TableDefault from '../../components/TableDefault';
 import CartContext from '../../context/Cart/CartContext';
 import toMoneyType from '../../utils/toMoneyType';
-// import useApi from '../../hooks/useApi';
-// import AuthContext from '../../context/Auth/AuthContext';
 
 export default function OrderDetails() {
-  // const [saleFound, setSaleFound] = useState(false);
   const {
     cart, total, getSales, saleList, sellers, seller,
   } = useContext(CartContext);
@@ -22,13 +19,6 @@ export default function OrderDetails() {
   && sellers.filter(({ id }) => Number(id) === Number(seller))[0];
 
   const dateArray = saleById && saleById.saleDate.split('-');
-
-  // const disabledButton = () => {
-  //   if (saleById) {
-  //     return saleById.status === 'Pendente';
-  //   }
-  //   return true;
-  // };
 
   useEffect(() => {
     const populateSalesList = () => {
