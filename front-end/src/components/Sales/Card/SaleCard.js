@@ -21,8 +21,7 @@ function RenderSaleCard({
     if (userRole === 'seller') {
       setDataTestType('seller_orders__element');
       setUrlToGo(`/seller/orders/${id}`);
-    }
-    else {
+    } else {
       setDataTestType('customer_orders__element');
       setUrlToGo(`/customer/orders/${id}`);
     }
