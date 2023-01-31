@@ -18,6 +18,16 @@ class SalesController {
     }
   }
 
+  async getSaleById() {
+    try {
+      const { id } = this.req.params;
+      const { type, message } = await this.saleService.getSaleById(id);
+      this.res.status(type).json(message);
+    } catch (e) {
+      this.next(e);
+    }
+  }
+
   async createSale() {
     try {
       const {

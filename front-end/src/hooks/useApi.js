@@ -50,7 +50,6 @@ const useApi = () => ({
       { headers: { Authorization: getByKey('user').token } },
 
     );
-    console.log(response.data);
     return response.data;
   },
 
@@ -61,6 +60,11 @@ const useApi = () => ({
 
   getSales: async () => {
     const response = await api.get('/sales');
+    return response.data;
+  },
+
+  getSaleProds: async (id) => {
+    const response = await api.get(`/sales/${id}`);
     return response.data;
   },
 

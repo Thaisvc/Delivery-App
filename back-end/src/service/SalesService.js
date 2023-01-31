@@ -1,14 +1,27 @@
-const { Sale, SaleProduct } = require('../database/models');
+const { Sale, SaleProduct, Product } = require('../database/models');
 const HttpError = require('../utils/HttpError');
 
 class SaleService {
   constructor() {
     this.saleModel = Sale;
     this.salesProductsModel = SaleProduct;
+    this.productModel = Product;
   }
 
   async getSales() {
     const response = await this.saleModel.findAll();
+
+    if (!response) throw new HttpError(404, 'Sellers not found');
+    
+    return { type: 200, message: response };
+  }
+
+  async getSaleById(id) {
+    const response = await this.saleModel.findOne({
+      include: [
+        { model: this.productModel, as: 'sales', through: { attributes: ['quantity'] } },
+      ],
+      where: { id } });
 
     if (!response) throw new HttpError(404, 'Sellers not found');
     

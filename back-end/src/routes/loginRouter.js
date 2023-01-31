@@ -9,9 +9,9 @@ loginRouter.post(
   (req, res, next) => new UserController(req, res, next).login(),
   );
 
-  loginRouter.patch(
-    '/',
-    (req, res, next) => new UserController(req, res, next).validateLogin(),
-    );
+loginRouter.patch(
+  '/',
+  (req, res, next) => new UserController(req, res, next).validateLogin(),
+  );
 
 module.exports = loginRouter;

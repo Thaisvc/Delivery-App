@@ -9,6 +9,11 @@ SalesRouter.get(
   (req, res, next) => new SalesController(req, res, next).getSales(),
 );
 
+SalesRouter.get(
+  '/:id',
+  (req, res, next) => new SalesController(req, res, next).getSaleById(),
+);
+
 SalesRouter.post(
   '/',
   (req, res, next) => new SalesController(req, res, next).createSale(),
