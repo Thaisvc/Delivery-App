@@ -26,7 +26,7 @@ function RenderSaleCard({
       setDataTestType('customer_orders__element');
       setUrlToGo(`/customer/orders/${id}`);
     }
-  }, [deliveryAddress]);
+  }, []);
 
   const onClick = () => {
     navigate(urlToGo);
