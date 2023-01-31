@@ -1,11 +1,9 @@
 import { string, arrayOf, shape } from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as C from './styles';
 import toMoneyType from '../../utils/toMoneyType';
-import CartContext from '../../context/Cart/CartContext';
 
-function TableDefault({ type, listItems }) {
-  const { cart, setCart } = useContext(CartContext);
+function TableNoContext({ type, listItems }) {
   const [dataTestType, setDataTestType] = useState('');
   // types: 'users', 'checkout', 'order'
 
@@ -75,9 +73,9 @@ function TableDefault({ type, listItems }) {
   );
 }
 
-TableDefault.propTypes = {
+TableNoContext.propTypes = {
   type: string.isRequired,
   listItems: arrayOf(shape()).isRequired,
 };
 
-export default TableDefault;
+export default TableNoContext;
