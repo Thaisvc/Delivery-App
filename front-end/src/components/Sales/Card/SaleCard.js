@@ -10,16 +10,15 @@ function RenderSaleCard({
   status,
   deliveryAddress,
   deliveryNumber }) {
+  const getRole = getByKey('user').role;
   const month = saleDate.split('-');
   const dateObj = new Date(saleDate);
   const navigate = useNavigate();
-  const [dataTestType, setDataTestType] = useState('');
-  const [urlToGo, setUrlToGo] = useState('');
-  const [userRole, setUserRole] = useState('');
+  const [dataTestType, setDataTestType] = useState(null);
+  const [urlToGo, setUrlToGo] = useState(null);
 
   useEffect(() => {
-    setUserRole(getByKey('user').role);
-    if (userRole === 'seller') {
+    if (getRole === 'seller') {
       setDataTestType('seller_orders__element');
       setUrlToGo(`/seller/orders/${id}`);
     } else {
@@ -39,41 +38,47 @@ function RenderSaleCard({
     }
   };
 
-  return (
-    <div
-      role="button"
-      tabIndex="0"
-      onKeyDown={ onKeyDown }
-      onClick={ () => navigate(urlToGo) }
-    >
-      <p
-        data-testid={ `${dataTestType}-order-id-${id}` }
+  if (urlToGo && dataTestType) {
+    return (
+
+      <div
+        role="button"
+        tabIndex="0"
+        onKeyDown={ onKeyDown }
+        onClick={ () => navigate(urlToGo) }
       >
-        {`Pedido ${id}`}
-      </p>
-      <p
-        data-testid={ `${dataTestType}-delivery-status-${id}` }
-      >
-        { status }
-      </p>
-      <p
-        data-testid={ `${dataTestType}-order-date-${id}` }
-      >
-        { `${dateObj.getDate()}/${month[1]}/${dateObj.getFullYear()}` }
-      </p>
-      <p
-        data-testid={ `${dataTestType}-card-price-${id}` }
-      >
-        { `${totalPrice.replace('.', ',')}` }
-      </p>
-      { userRole === 'seller' && (
         <p
-          data-testid={ `${dataTestType}-card-address-${id}` }
+          data-testid={ `${dataTestType}-order-id-${id}` }
         >
-          { `${deliveryAddress}, ${deliveryNumber}` }
-        </p>) }
-    </div>
-  );
+          {`Pedido ${id}`}
+        </p>
+        <p
+          data-testid={ `${dataTestType}-delivery-status-${id}` }
+        >
+          { status }
+        </p>
+        <p
+          data-testid={ `${dataTestType}-order-date-${id}` }
+        >
+          { `${dateObj.getDate()}/${month[1]}/${dateObj.getFullYear()}` }
+        </p>
+        <p
+          data-testid={ `${dataTestType}-card-price-${id}` }
+        >
+          { `${totalPrice.replace('.', ',')}` }
+        </p>
+        { getRole === 'seller' && (
+          <p
+            data-testid={ `${dataTestType}-card-address-${id}` }
+          >
+            { `${deliveryAddress}, ${deliveryNumber}` }
+          </p>) }
+
+      </div>
+    );
+  }
+
+  return <p>carregando</p>;
 }
 
 RenderSaleCard.propTypes = {
