@@ -14,15 +14,22 @@ function RenderSaleCard({
   const dateObj = new Date(saleDate);
   const navigate = useNavigate();
   const [dataTestType, setDataTestType] = useState('');
+  const [urlToGo, setUrlToGo] = useState('');
 
   useEffect(() => {
     const userRole = getByKey('user').role;
-    if (userRole === 'seller') setDataTestType('seller_orders__element');
-    else setDataTestType('customer_orders__element');
+    if (userRole === 'seller') {
+      setDataTestType('seller_orders__element');
+      setUrlToGo(`/seller/orders/${id}`);
+    }
+    else {
+      setDataTestType('customer_orders__element');
+      setUrlToGo(`/customer/orders/${id}`);
+    }
   }, [deliveryAddress]);
 
   const onClick = () => {
-    navigate(`/customer/orders/${id}`);
+    navigate(urlToGo);
   };
 
   const onKeyDown = (event) => {
@@ -37,7 +44,7 @@ function RenderSaleCard({
       role="button"
       tabIndex="0"
       onKeyDown={ onKeyDown }
-      onClick={ () => navigate(`/seller/orders/${id}`) }
+      onClick={ () => navigate(urlToGo) }
     >
       <p
         data-testid={ `${dataTestType}-order-id-${id}` }
