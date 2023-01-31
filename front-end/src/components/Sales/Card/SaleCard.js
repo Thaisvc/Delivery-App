@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { number, string } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { getByKey } from '../../../utils/localStorage';
 
-function RenderSaleCard({ id, totalPrice, saleDate, status }) {
+function RenderSaleCard({
+  id,
+  totalPrice,
+  saleDate,
+  status,
+  deliveryAddress,
+  deliveryNumber }) {
+  const getRole = getByKey('user').role;
   const month = saleDate.split('-');
   const dateObj = new Date(saleDate);
   const navigate = useNavigate();
+  const [dataTestType, setDataTestType] = useState(null);
+  const [urlToGo, setUrlToGo] = useState(null);
+
+  useEffect(() => {
+    if (getRole === 'seller') {
+      setDataTestType('seller_orders__element');
+      setUrlToGo(`/seller/orders/${id}`);
+    } else {
+      setDataTestType('customer_orders__element');
+      setUrlToGo(`/customer/orders/${id}`);
+    }
+  }, []);
 
   const onClick = () => {
-    navigate(`/customer/orders/${id}`);
+    navigate(urlToGo);
   };
 
   const onKeyDown = (event) => {
@@ -18,35 +38,47 @@ function RenderSaleCard({ id, totalPrice, saleDate, status }) {
     }
   };
 
-  return (
-    <div
-      role="button"
-      tabIndex="0"
-      onKeyDown={ onKeyDown }
-      onClick={ () => navigate(`/customer/orders/${id}`) }
-    >
-      <p
-        data-testid={ `customer_orders__element-order-id-${id}` }
+  if (urlToGo && dataTestType) {
+    return (
+
+      <div
+        role="button"
+        tabIndex="0"
+        onKeyDown={ onKeyDown }
+        onClick={ () => navigate(urlToGo) }
       >
-        {`Pedido ${id}`}
-      </p>
-      <p
-        data-testid={ `customer_orders__element-delivery-status-${id}` }
-      >
-        { status }
-      </p>
-      <p
-        data-testid={ `customer_orders__element-order-date-${id}` }
-      >
-        { `${dateObj.getDate()}/${month[1]}/${dateObj.getFullYear()}` }
-      </p>
-      <p
-        data-testid={ `customer_orders__element-card-price-${id}` }
-      >
-        { `${totalPrice.replace('.', ',')}` }
-      </p>
-    </div>
-  );
+        <p
+          data-testid={ `${dataTestType}-order-id-${id}` }
+        >
+          {`Pedido ${id}`}
+        </p>
+        <p
+          data-testid={ `${dataTestType}-delivery-status-${id}` }
+        >
+          { status }
+        </p>
+        <p
+          data-testid={ `${dataTestType}-order-date-${id}` }
+        >
+          { `${dateObj.getDate()}/${month[1]}/${dateObj.getFullYear()}` }
+        </p>
+        <p
+          data-testid={ `${dataTestType}-card-price-${id}` }
+        >
+          { `${totalPrice.replace('.', ',')}` }
+        </p>
+        { getRole === 'seller' && (
+          <p
+            data-testid={ `${dataTestType}-card-address-${id}` }
+          >
+            { `${deliveryAddress}, ${deliveryNumber}` }
+          </p>) }
+
+      </div>
+    );
+  }
+
+  return <p>carregando</p>;
 }
 
 RenderSaleCard.propTypes = {

@@ -1,13 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-
 import Login from '../pages/Login';
 import Register from '../pages/Register/Register';
 import Products from '../pages/Products/Products';
 import CartProvider from '../context/Cart/CartProvider';
+import SellerProvider from '../context/Seller/SellerProvider';
 import CustomerCheckout from '../pages/CustomerCheckout';
 import Orders from '../pages/Orders';
 import AdminManage from '../pages/Admin/index';
 import OrderDetails from '../pages/OderDetails';
+import SellerOrders from '../pages/SellerOrders';
+import SellerDetails from '../pages/OderDetails/sellerDetails';
 
 export default function Main() {
   return (
@@ -49,6 +51,20 @@ export default function Main() {
               <OrderDetails />
             </CartProvider>
           }
+        />
+      </Route>
+      <Route path="/seller">
+        <Route
+          path="orders"
+          element={
+            <SellerProvider>
+              <SellerOrders />
+            </SellerProvider>
+          }
+        />
+        <Route
+          path="orders/:id"
+          element={ <SellerDetails /> }
         />
       </Route>
       <Route path="/admin/manage" element={ <AdminManage /> } />
