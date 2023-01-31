@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Navbar from '../../components/Navbar/NavBar';
 
 import TableDefault from '../../components/TableDefault';
@@ -9,28 +9,32 @@ import toMoneyType from '../../utils/toMoneyType';
 
 export default function OrderDetails() {
   // const [saleFound, setSaleFound] = useState(false);
-  const { cart, total, getSales, saleList, seller, createSale } = useContext(CartContext);
-  console.log(cart);
-  const [order, setOrder] = useState({});
+  const {
+    cart, total, getSales, saleList, sellers, seller,
+  } = useContext(CartContext);
 
-  const getSaleById = () => {
-    const saleById = saleList.filter((item) => {
-      const id = window.location.pathname.match(/\d+/)[0];
+  const idSale = window.location.pathname.match(/\d+/)[0];
 
-      return item.id === Number(id);
-    });
-    setOrder(saleById[0]);
-  };
+  const saleById = saleList.length
+  && saleList.filter((sale) => Number(sale.id) === Number(idSale))[0];
+
+  const getSellerName = sellers.length
+  && sellers.filter(({ id }) => Number(id) === Number(seller))[0];
+
+  const dateArray = saleById && saleById.saleDate.split('-');
+
+  // const disabledButton = () => {
+  //   if (saleById) {
+  //     return saleById.status === 'Pendente';
+  //   }
+  //   return true;
+  // };
 
   useEffect(() => {
     const populateSalesList = () => {
       getSales();
     };
     populateSalesList();
-  }, []);
-
-  useEffect(() => {
-    getSaleById();
   }, []);
 
   const dIStatus = 'customer_order_details__element-order-details-label-delivery-status';
@@ -43,41 +47,34 @@ export default function OrderDetails() {
       <p
         data-testid="customer_order_details__element-order-details-label-order-id"
       >
-        PEDIDO
-        { order ? order.id : '' }
+        {`PEDIDO ${idSale}`}
       </p>
       <p
         data-testid="customer_order_details__element-order-details-label-seller-name"
       >
-        P.Vend:
-        { seller ? seller.name : '' }
+        { `P.Vend: ${getSellerName && getSellerName.name}` }
       </p>
       <p
         data-testid="customer_order_details__element-order-details-label-order-date"
       >
-        data
+        {
+          dateArray && `Data: ${
+            dateArray[2].split('T')[0]
+          }/${dateArray[1]}/${dateArray[0]}`
+        }
       </p>
       <p
         data-testid={ dIStatus }
       >
-        Status:
-        { order ? order.status : 'Pendente' }
+        { `Status ${saleById && saleById.status}` }
       </p>
 
       <button
         data-testid="customer_order_details__button-delivery-check"
         type="button"
-        // disabled={ disabled }
-        onClick={ async () => {
-          createSale({
-            orderId: user.response.id,
-            //     sellerId: Number(seller),
-            totalPrice: Number(total.toFixed(2)),
-            status: 'Entregue',
-            //     cartItems: cart,
-          });
-          //   setSaleCreated(true);
-        } }
+        disabled={
+          saleById ? saleById.status === 'Pendente' : true
+        }
       >
         MARCAR COMO ENTREGUE
       </button>
