@@ -73,6 +73,8 @@ const useApi = () => ({
     return response.data;
   },
 
+  updateStatus: async (status, id) => api.patch('/sales', { status, id }),
+
   createSale: async ({
     userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status, cartItems,
   }) => {

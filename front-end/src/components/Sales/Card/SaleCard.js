@@ -3,6 +3,8 @@ import { number, string } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { getByKey } from '../../../utils/localStorage';
 
+const NUM_PARAM = 10;
+
 function RenderSaleCard({
   id,
   totalPrice,
@@ -16,8 +18,10 @@ function RenderSaleCard({
   const navigate = useNavigate();
   const [dataTestType, setDataTestType] = useState(null);
   const [urlToGo, setUrlToGo] = useState(null);
+  const [day, setDay] = useState('');
 
   useEffect(() => {
+    setDay(dateObj.getDate() < NUM_PARAM ? `0${dateObj.getDate()}` : dateObj.getDate());
     if (getRole === 'seller') {
       setDataTestType('seller_orders__element');
       setUrlToGo(`/seller/orders/${id}`);
@@ -60,7 +64,7 @@ function RenderSaleCard({
         <p
           data-testid={ `${dataTestType}-order-date-${id}` }
         >
-          { `${dateObj.getDate()}/${month[1]}/${dateObj.getFullYear()}` }
+          { `${day}/${month[1]}/${dateObj.getFullYear()}` }
         </p>
         <p
           data-testid={ `${dataTestType}-card-price-${id}` }

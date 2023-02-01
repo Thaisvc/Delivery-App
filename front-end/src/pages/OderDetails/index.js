@@ -48,7 +48,7 @@ export default function OrderDetails() {
         data-testid="customer_order_details__element-order-details-label-order-date"
       >
         {
-          dateArray && `Data: ${
+          dateArray && `${
             dateArray[2].split('T')[0]
           }/${dateArray[1]}/${dateArray[0]}`
         }

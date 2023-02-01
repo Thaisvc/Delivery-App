@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/Auth/AuthContext';
+import { saveByKey } from '../../utils/localStorage';
 import validateRegister from '../../utils/validateRegister';
 
 function RegisterBox() {
@@ -19,8 +20,18 @@ function RegisterBox() {
   const handleRegister = async () => {
     try {
       setFail(false);
-      const isCreated = await auth.register(name, email, pwd, 'customer');
-      if (isCreated) {
+      const data = await auth.register(name, email, pwd, 'customer');
+      console.log(data);
+      if (data) {
+        saveByKey(
+          'user',
+          {
+            name: data.name,
+            email: data.email,
+            role: data.role,
+            token: data.token,
+          },
+        );
         navHistory('/customer/products');
       }
     } catch (e) {

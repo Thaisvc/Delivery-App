@@ -8,19 +8,34 @@ import TableNoContext from '../../components/TableDefault/TableNoContext';
 
 export default function SellerDetails() {
   const [prodsList, setProdsList] = useState(null);
+  const [status, setStatus] = useState(null);
   const api = useApi();
   const dateArray = prodsList && prodsList.saleDate.split('-');
   const { pathname } = useLocation();
   const bronkenPath = pathname.split('/');
   const orderId = bronkenPath[bronkenPath.length - 1];
   const testId = 'seller_order_details__element-order-details-label-delivery-status';
+  console.log(dateArray);
+  const getData = async () => {
+    const response = await api.getSaleProds(orderId);
+    setProdsList(response);
+    setStatus(response.status);
+  };
 
-  useEffect(() => {
-    (async () => {
-      const response = await api.getSaleProds(orderId);
-      setProdsList(response);
-    })();
+  const toUpdateStatus = async () => {
+    await api.updateStatus(status, orderId);
+    await getData();
+  };
+
+  useEffect(async () => {
+    await getData();
   }, []);
+
+  useEffect(async () => {
+    console.log(status);
+    console.log(prodsList);
+    if (status !== null) await toUpdateStatus();
+  }, [status]);
 
   const renderTotal = () => (
     <p
@@ -45,7 +60,7 @@ export default function SellerDetails() {
             data-testid="seller_order_details__element-order-details-label-order-date"
           >
             {
-              dateArray && `Data: ${
+              dateArray && `${
                 dateArray[2].split('T')[0]
               }/${dateArray[1]}/${dateArray[0]}`
             }
@@ -58,6 +73,7 @@ export default function SellerDetails() {
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
+            onClick={ () => setStatus('Preparando') }
             disabled={ prodsList.status !== 'Pendente' }
           >
             PREPARAR PEDIDO
@@ -65,7 +81,8 @@ export default function SellerDetails() {
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
-            disabled={ prodsList.status === 'Pendente' }
+            disabled={ prodsList.status !== 'Preparando' }
+            onClick={ () => setStatus('Em Trânsito') }
           >
             SAIU PARA ENTREGA
           </button>

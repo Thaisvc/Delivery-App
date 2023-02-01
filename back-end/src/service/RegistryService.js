@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const registrySchema = require('../validations/RegistrySchema');
 const { User } = require('../database/models');
 const HttpError = require('../utils/HttpError');
+const { createToken } = require('../utils/tokenCreate');
 
 class RegistryService {
   constructor() {
@@ -21,7 +22,10 @@ class RegistryService {
     });
     
     if (!created) throw new HttpError(409, 'usuário já existente');
-    return { type: 201, message: user };
+
+    const token = createToken(user);
+
+    return { type: 201, message: { name: user.name, email: user.email, role: user.role, token } };
   }
 }
 module.exports = RegistryService;

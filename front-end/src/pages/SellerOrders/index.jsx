@@ -12,7 +12,6 @@ function SellerOrders() {
       await getSales();
     };
     populateSalesList();
-    console.log(saleList);
   }, [getSales]);
 
   return (
