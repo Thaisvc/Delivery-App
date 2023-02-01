@@ -16,8 +16,10 @@ function RenderSaleCard({
   const navigate = useNavigate();
   const [dataTestType, setDataTestType] = useState(null);
   const [urlToGo, setUrlToGo] = useState(null);
+  const [day, setDay] = useState('');
 
   useEffect(() => {
+    setDay(dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate())
     if (getRole === 'seller') {
       setDataTestType('seller_orders__element');
       setUrlToGo(`/seller/orders/${id}`);
@@ -60,7 +62,7 @@ function RenderSaleCard({
         <p
           data-testid={ `${dataTestType}-order-date-${id}` }
         >
-          { `${dateObj.getDate()}/${month[1]}/${dateObj.getFullYear()}` }
+          { `${day}/${month[1]}/${dateObj.getFullYear()}` }
         </p>
         <p
           data-testid={ `${dataTestType}-card-price-${id}` }
