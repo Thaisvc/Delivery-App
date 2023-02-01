@@ -47,6 +47,17 @@ class SalesController {
       this.next(e);
     }
   }
+
+  async updateStatus() {
+    try {
+      const { status, id } = this.req.body;
+      console.log(status);
+      const { type, message } = await this.saleService.updateStatus(status, id);
+      this.res.status(type).json(message);
+    } catch (e) {
+      this.next(e);
+    }
+  }
 }
 
 module.exports = SalesController;

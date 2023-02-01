@@ -46,7 +46,6 @@ function Login() {
 
       saveByKey(
         'user',
-
         {
           name: data.response.name,
           email: data.response.email,

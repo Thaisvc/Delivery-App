@@ -8,6 +8,7 @@ import TableNoContext from '../../components/TableDefault/TableNoContext';
 
 export default function SellerDetails() {
   const [prodsList, setProdsList] = useState(null);
+  const [status, setStatus] = useState(null);
   const api = useApi();
   const dateArray = prodsList && prodsList.saleDate.split('-');
   const { pathname } = useLocation();
@@ -15,12 +16,25 @@ export default function SellerDetails() {
   const orderId = bronkenPath[bronkenPath.length - 1];
   const testId = 'seller_order_details__element-order-details-label-delivery-status';
 
-  useEffect(() => {
-    (async () => {
-      const response = await api.getSaleProds(orderId);
-      setProdsList(response);
-    })();
+  const getData = async () => {
+    const response = await api.getSaleProds(orderId);
+    setProdsList(response);
+    setStatus(response.status);
+  };
+
+  const toUpdateStatus = async () => {
+    await api.updateStatus(status, orderId);
+    await getData();
+  };
+
+  useEffect(async () => {
+    await getData();
   }, []);
+
+  useEffect(async () => {
+    console.log(status);
+    if (status !== null) await toUpdateStatus();
+  }, [status]);
 
   const renderTotal = () => (
     <p
@@ -58,6 +72,7 @@ export default function SellerDetails() {
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
+            onClick={ () => setStatus('Preparando') }
             disabled={ prodsList.status !== 'Pendente' }
           >
             PREPARAR PEDIDO
@@ -65,7 +80,8 @@ export default function SellerDetails() {
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
-            disabled={ prodsList.status === 'Pendente' }
+            disabled={ prodsList.status !== 'Preparando' }
+            onClick={ () => setStatus('Em Trânsito') }
           >
             SAIU PARA ENTREGA
           </button>

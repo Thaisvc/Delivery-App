@@ -11,7 +11,7 @@ class SaleService {
   async getSales() {
     const response = await this.saleModel.findAll();
 
-    if (!response) throw new HttpError(404, 'Sellers not found');
+    if (!response) throw new HttpError(404, 'Sales not found');
     
     return { type: 200, message: response };
   }
@@ -23,7 +23,7 @@ class SaleService {
       ],
       where: { id } });
 
-    if (!response) throw new HttpError(404, 'Sellers not found');
+    if (!response) throw new HttpError(404, 'Sale not found');
     
     return { type: 200, message: response };
   }
@@ -56,6 +56,21 @@ class SaleService {
       quantity,
     });
     
+    if (!response) throw new HttpError(400, 'Não foi possível completar a ação');
+
+    return { type: 201, message: response };
+  }
+
+  async updateStatus(status, id) {
+    const sale = await this.getSaleById(id);
+
+    if (!sale) throw new HttpError(404, 'Pedido não encontrado');
+
+    const response = await this.saleModel.update(
+      { status },
+      { where: { id } }
+    );
+
     if (!response) throw new HttpError(400, 'Não foi possível completar a ação');
 
     return { type: 201, message: response };

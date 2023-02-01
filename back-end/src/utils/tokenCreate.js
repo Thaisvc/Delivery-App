@@ -8,7 +8,7 @@ const createToken = (user) => {
     const payload = { name: user.name, role: user.role }; 
   return jwt.sign(
     payload, 
-   JWT_SECRET,
+    JWT_SECRET,
     { algorithm: 'HS256', expiresIn: '1d' },
   );
   }
@@ -16,7 +16,7 @@ const createToken = (user) => {
   const payload = { id: user.id, name: user.email }; 
   return jwt.sign(
     payload, 
-   JWT_SECRET,
+    JWT_SECRET,
     { algorithm: 'HS256', expiresIn: '15d' },
   );
 };

@@ -21,7 +21,7 @@ function AuthProvider({ children }) {
     const data = await api.register(name, email, password, role);
     if (data) {
       setCreated(data);
-      return true;
+      return data;
     }
     return false;
   };
