@@ -15,7 +15,7 @@ export default function SellerDetails() {
   const bronkenPath = pathname.split('/');
   const orderId = bronkenPath[bronkenPath.length - 1];
   const testId = 'seller_order_details__element-order-details-label-delivery-status';
-
+  console.log(dateArray);
   const getData = async () => {
     const response = await api.getSaleProds(orderId);
     setProdsList(response);
@@ -33,6 +33,7 @@ export default function SellerDetails() {
 
   useEffect(async () => {
     console.log(status);
+    console.log(prodsList);
     if (status !== null) await toUpdateStatus();
   }, [status]);
 
@@ -59,7 +60,7 @@ export default function SellerDetails() {
             data-testid="seller_order_details__element-order-details-label-order-date"
           >
             {
-              dateArray && `Data: ${
+              dateArray && `${
                 dateArray[2].split('T')[0]
               }/${dateArray[1]}/${dateArray[0]}`
             }

@@ -1,6 +1,8 @@
 const { Sale, SaleProduct, Product } = require('../database/models');
 const HttpError = require('../utils/HttpError');
 
+const ERROR_FAILED = 'Não foi possível completar a ação';
+
 class SaleService {
   constructor() {
     this.saleModel = Sale;
@@ -39,7 +41,7 @@ class SaleService {
       deliveryNumber,
       status,
     });
-    if (!response) throw new HttpError(400, 'Não foi possível completar a ação');
+    if (!response) throw new HttpError(400, ERROR_FAILED);
 
     const salesProducts = cartItems.map(async (item) => this
     .createSaleProduct(response.id, item.id, item.quant));
@@ -56,7 +58,7 @@ class SaleService {
       quantity,
     });
     
-    if (!response) throw new HttpError(400, 'Não foi possível completar a ação');
+    if (!response) throw new HttpError(400, ERROR_FAILED);
 
     return { type: 201, message: response };
   }
@@ -68,10 +70,10 @@ class SaleService {
 
     const response = await this.saleModel.update(
       { status },
-      { where: { id } }
+      { where: { id } },
     );
 
-    if (!response) throw new HttpError(400, 'Não foi possível completar a ação');
+    if (!response) throw new HttpError(400, ERROR_FAILED);
 
     return { type: 201, message: response };
   }
