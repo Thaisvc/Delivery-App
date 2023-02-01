@@ -1,9 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar/NavBar';
 
 import TableDefault from '../../components/TableDefault';
 import CartContext from '../../context/Cart/CartContext';
 import toMoneyType from '../../utils/toMoneyType';
+
+import useApi from '../../hooks/useApi'; // eu
 
 export default function OrderDetails() {
   const {
@@ -19,15 +21,37 @@ export default function OrderDetails() {
   && sellers.filter(({ id }) => Number(id) === Number(seller))[0];
 
   const dateArray = saleById && saleById.saleDate.split('-');
+  const dIStatus = 'customer_order_details__element-order-details-label-delivery-status';
 
-  useEffect(() => {
+  const [status, setStatus] = useState(null); // eu
+  const api = useApi(); // eu
+
+  const getData = async () => { // eu
+    const response = await api.getSaleProds(idSale);
+    setStatus(response.status);
+    console.log('1', response.status);
+    console.log('1', response);
+  };
+
+  const toUpdateStatus = async () => { // eu
+    console.log('3', status, idSale);
+    const test = await api.updateStatus(status, idSale);
+    console.log(test, 'retorno');
+    await getData();
+  };
+
+  useEffect(async () => { // eu
+    console.log('2', status);
+    if (status !== null) await toUpdateStatus();
+  }, [status]);
+
+  useEffect(async () => {
     const populateSalesList = () => {
       getSales();
     };
     populateSalesList();
+    await getData();
   }, []);
-
-  const dIStatus = 'customer_order_details__element-order-details-label-delivery-status';
 
   return (
     <>
@@ -63,8 +87,11 @@ export default function OrderDetails() {
         data-testid="customer_order_details__button-delivery-check"
         type="button"
         disabled={
-          saleById ? saleById.status === 'Pendente' : true
+          saleById ? saleById.status === 'Pendente'
+          || saleById.status === 'Preparando'
+          || saleById.status === 'Entregue' : true
         }
+        onClick={ () => setStatus('Entregue') } // eu
       >
         MARCAR COMO ENTREGUE
       </button>
