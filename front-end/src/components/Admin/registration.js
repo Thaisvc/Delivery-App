@@ -21,7 +21,6 @@ function RegisterAdm() {
       setError(false);
       const isCreated = await
       auth.registerAdm(nameAdm, emailAdm, pwdAdm, type);
-      console.log(isCreated);
       if (isCreated) {
         console.log(isCreated);
       }
