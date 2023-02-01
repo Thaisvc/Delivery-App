@@ -48,6 +48,7 @@ export default function OrderDetails() {
   useEffect(async () => {
     const populateSalesList = () => {
       getSales();
+      console.log(dIStatus);
     };
     populateSalesList();
     await getData();
@@ -80,16 +81,15 @@ export default function OrderDetails() {
       <p
         data-testid={ dIStatus }
       >
-        { `Status ${saleById && saleById.status}` }
+        { `Status ${saleById && status}` }
       </p>
 
       <button
-        data-testid="customer_order_details__button-delivery-check"
         type="button"
+        data-testid="customer_order_details__button-delivery-check"
         disabled={
-          saleById ? saleById.status === 'Pendente'
-          || saleById.status === 'Preparando'
-          || saleById.status === 'Entregue' : true
+          saleById ? status !== 'Em Trânsito'
+            : true
         }
         onClick={ () => setStatus('Entregue') } // eu
       >
