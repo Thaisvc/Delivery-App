@@ -1,6 +1,8 @@
 const { Sale, SaleProduct, Product } = require('../database/models');
 const HttpError = require('../utils/HttpError');
 
+const ERROR_FAILED = 'Não foi possível completar a ação';
+
 class SaleService {
   constructor() {
     this.saleModel = Sale;
@@ -11,7 +13,7 @@ class SaleService {
   async getSales() {
     const response = await this.saleModel.findAll();
 
-    if (!response) throw new HttpError(404, 'Sellers not found');
+    if (!response) throw new HttpError(404, 'Sales not found');
     
     return { type: 200, message: response };
   }
@@ -23,7 +25,7 @@ class SaleService {
       ],
       where: { id } });
 
-    if (!response) throw new HttpError(404, 'Sellers not found');
+    if (!response) throw new HttpError(404, 'Sale not found');
     
     return { type: 200, message: response };
   }
@@ -39,7 +41,7 @@ class SaleService {
       deliveryNumber,
       status,
     });
-    if (!response) throw new HttpError(400, 'Não foi possível completar a ação');
+    if (!response) throw new HttpError(400, ERROR_FAILED);
 
     const salesProducts = cartItems.map(async (item) => this
     .createSaleProduct(response.id, item.id, item.quant));
@@ -56,7 +58,22 @@ class SaleService {
       quantity,
     });
     
-    if (!response) throw new HttpError(400, 'Não foi possível completar a ação');
+    if (!response) throw new HttpError(400, ERROR_FAILED);
+
+    return { type: 201, message: response };
+  }
+
+  async updateStatus(status, id) {
+    const sale = await this.getSaleById(id);
+
+    if (!sale) throw new HttpError(404, 'Pedido não encontrado');
+
+    const response = await this.saleModel.update(
+      { status },
+      { where: { id } },
+    );
+
+    if (!response) throw new HttpError(400, ERROR_FAILED);
 
     return { type: 201, message: response };
   }
