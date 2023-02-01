@@ -48,7 +48,7 @@ function Navbar() {
         { userRole === 'seller' && (
           <div>
             <Link
-              data-testid="customer_products__element-navbar-link-products"
+              data-testid="customer_products__element-navbar-link-orders"
               to="/seller/orders"
             >
               PEDIDOS
