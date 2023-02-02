@@ -52,7 +52,7 @@ function Navbar() {
               data-testid="customer_products__element-navbar-link-orders"
               to="/admin"
             >
-              'GERENCIAR USUÁRIOS'
+              GERENCIAR USUÁRIOS
             </Link>
           </div>) }
         { userRole === 'seller' && (
