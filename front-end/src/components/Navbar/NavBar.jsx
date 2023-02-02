@@ -46,15 +46,25 @@ function Navbar() {
             </div>
           </>
         ) }
-        <div>
-          <Link
-            data-testid="customer_products__element-navbar-link-products"
-            to="/admin"
-          >
-            { userRole === 'seller' && 'PEDIDOS' }
-            { userRole === 'administrator' && 'GERENCIAR USUÁRIOS' }
-          </Link>
-        </div>
+        { userRole === 'administrator' && (
+          <div>
+            <Link
+              data-testid="customer_products__element-navbar-link-orders"
+              to="/admin"
+            >
+              'GERENCIAR USUÁRIOS'
+            </Link>
+          </div>) }
+        { userRole === 'seller' && (
+          <div>
+            <Link
+              data-testid="customer_products__element-navbar-link-orders"
+              to="/seller/orders"
+            >
+              PEDIDOS
+            </Link>
+          </div>
+        ) }
         <div
           data-testid="customer_products__element-navbar-user-full-name"
           to="/customer/profile"
