@@ -2,15 +2,17 @@ import { string, arrayOf, shape } from 'prop-types';
 import { useEffect, useState } from 'react';
 import * as C from './styles';
 import toMoneyType from '../../utils/toMoneyType';
+import useApi from '../../hooks/useApi';
 
 function TableNoContext({ type, listItems }) {
   const [dataTestType, setDataTestType] = useState('');
   // types: 'users', 'checkout', 'order'
 
-  const removeItem = (name) => {
-    const newcart = cart.filter((item) => item.name !== name);
-    setCart(newcart);
-  };
+  const api = useApi();
+
+  const removeItem = async (id) => listItems.forEach(async (item) => {
+    if (item.id === id) await api.deleteUser(item.id);
+  });
 
   useEffect(() => {
     if (type === 'users') setDataTestType('admin_manage__element-user');
@@ -39,22 +41,39 @@ function TableNoContext({ type, listItems }) {
             </td>
             <td
               data-testid={
-                type === 'users'
-                  ? 'admin_manage__input-email' : `${dataTestType}-table-name-${i}`
+                `${dataTestType}-table-name-${i}`
               }
             >
               { item.name }
             </td>
-            <td data-testid={ `${dataTestType}-table-quantity-${i}` }>
+            <td
+              data-testid={
+                `${dataTestType}-table-${type === 'users' ? 'email' : 'quantity'}-${i}`
+              }
+            >
               { type === 'users' ? item.email : item.quant }
             </td>
-            <td data-testid={ `${dataTestType}-table-unit-price-${i}` }>
-              { type === 'users' ? item.type : `R$${toMoneyType(item.price)}` }
+            <td
+              data-testid={
+                `${dataTestType}-table-${type === 'users' ? 'role' : 'unit-price'}-${i}`
+              }
+            >
+              { type === 'users' ? item.role : `R$${toMoneyType(item.price)}` }
             </td>
-            <td data-testid={ `${dataTestType}-table-sub-total-${i}` }>
+            <td
+              data-testid={
+                `${dataTestType}-table-${type === 'users' ? 'remove' : 'sub-total'}-${i}`
+              }
+            >
               {
                 type !== 'users' ? `R$${toMoneyType(item.subTotal)}`
-                  : <button type="button">Excluir</button>
+                  : (
+                    <button
+                      type="button"
+                      onClick={ async () => removeItem(item.id) }
+                    >
+                      Excluir
+                    </button>)
               }
             </td>
             <td>
@@ -62,7 +81,7 @@ function TableNoContext({ type, listItems }) {
                 <button
                   data-testid={ `${dataTestType}-table-remove-${i}` }
                   type="button"
-                  onClick={ () => removeItem(item.name) }
+                  // onClick={ () => removeItem(item.id) }
                 >
                   Remover item
                 </button>) }
