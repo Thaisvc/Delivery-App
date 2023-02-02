@@ -14,6 +14,7 @@ function Navbar() {
       setUserName(getLocalStorage.name);
       setUserRole(getLocalStorage.role);
     }
+    console.log(userRole);
   }, []);
 
   const { setUser } = useContext(AuthContext);
@@ -45,10 +46,19 @@ function Navbar() {
             </div>
           </>
         ) }
+        { userRole === 'administrator' && (
+          <div>
+            <Link
+              data-testid="customer_products__element-navbar-link-orders"
+              to="/admin"
+            >
+              GERENCIAR USUÁRIOS
+            </Link>
+          </div>) }
         { userRole === 'seller' && (
           <div>
             <Link
-              data-testid="customer_products__element-navbar-link-products"
+              data-testid="customer_products__element-navbar-link-orders"
               to="/seller/orders"
             >
               PEDIDOS

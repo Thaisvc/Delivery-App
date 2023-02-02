@@ -7,6 +7,7 @@ const ErrorHandler = require('../middlewares/ErrorHandler');
 const productRouter = require('../routes/productRouter');
 const validatesUser = require('../middlewares/validatesUser');
 const sellerRouter = require('../routes/sellerRouter');
+const userRouter = require('../routes/userRouter');
 const SalesRouter = require('../routes/salesRouter');
 
 const app = express();
@@ -18,6 +19,7 @@ app.use('/registry', registryRouter);
 app.use('/register', validatesUser, registryAdmRouter);
 app.use('/products', productRouter);
 app.use('/sellers', sellerRouter);
+app.use('/users', userRouter);
 app.use('/sales', SalesRouter);
 app.use(ErrorHandler.handle);
 

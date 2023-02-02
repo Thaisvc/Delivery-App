@@ -92,7 +92,6 @@ function RegisterAdm() {
             setNameAdm('');
             setEmailAdm('');
             setPwdAdm('');
-            setType('');
           } }
         >
           CADASTRAR
