@@ -4,10 +4,21 @@ const loginSchema = require('../validations/loginSchema');
 const { User } = require('../database/models');
 const HttpError = require('../utils/HttpError');
 const { createToken } = require('../utils/tokenCreate');
+const noPassword = require('../utils/noPassword');
 
 class UserService {
   constructor() {
     this.userModel = User;
+  }
+
+  async getUsers() {
+    const response = await this.userModel.findAll();
+
+    const withoutPassword = noPassword(response);
+
+    if (!response) throw new HttpError(404, 'Users not found');
+
+    return { type: 200, message: withoutPassword };
   }
 
   async login({ email, password }) {
@@ -27,15 +38,19 @@ class UserService {
       where: { role: 'seller' },
     });
 
-    const withoutPassword = response.map(({ id, name, email, role }) => ({
-      id,
-      name,
-      email,
-      role,
-    }));
+    const withoutPassword = noPassword(response);
 
     if (!response) throw new HttpError(404, 'Sellers not found');
     return { type: 200, message: withoutPassword };
+  }
+
+  async deleteUser(id) {
+    const response = await this.userModel.destroy({
+      where: { id },
+    });
+
+    if (!response) throw new HttpError(404, 'Sellers not found');
+    return { type: 200, message: response };
   }
 }
 

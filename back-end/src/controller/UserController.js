@@ -29,6 +29,25 @@ class UserController {
     }
   }
 
+  async getUsers() {
+    try {
+      const { type, message } = await this.userService.getUsers();
+      this.res.status(type).json(message);
+    } catch (e) {
+      this.next(e);
+    }
+  }
+
+  async deleteUser() {
+    try {
+      const { id } = this.req.body;
+      const { type, message } = await this.userService.deleteUser(id);
+      this.res.status(type).json(message);
+    } catch (e) {
+      this.next(e);
+    }
+  }
+
   async getSellers() {
     try {
       const { type, message } = await this.userService.getSellers();

@@ -37,8 +37,8 @@ const useApi = () => ({
   },
 
   registerAdm: async (name, login, password, role) => {
-    const Token = getByKey('user');
-    if (!Token) { return 'token is required'; }
+    const { token } = getByKey('user');
+    if (!token) { return 'token is required'; }
     const response = await api.post(
       '/register',
       {
@@ -47,7 +47,7 @@ const useApi = () => ({
         name,
         role,
       },
-      { headers: { Authorization: getByKey('user').token } },
+      { headers: { Authorization: token } },
 
     );
     return response.data;
@@ -71,6 +71,16 @@ const useApi = () => ({
   getSellers: async () => {
     const response = await api.get('/sellers');
     return response.data;
+  },
+
+  getUsers: async () => {
+    const response = await api.get('/users');
+    return response.data;
+  },
+
+  deleteUser: async (id) => {
+    const response = await api.delete('/users', { data: { id } });
+    console.log(response);
   },
 
   updateStatus: async (status, id) => api.patch('/sales', { status, id }),
